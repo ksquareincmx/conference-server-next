@@ -1,7 +1,7 @@
-const beforeSaveHook = (ctx, next) => {
+const bookingBeforeSaveHook = (ctx, next) => {
   const { Model: Booking } = ctx;
   const { instance } = ctx;
-  const { start, end } = instance;
+  const { start, end, roomId } = instance;
 
   // TODO: do this in a fancier fashion
   if (start.toString() === end.toString()) {
@@ -24,6 +24,9 @@ const beforeSaveHook = (ctx, next) => {
             end: {
               // lte: start
               between: [start, end]
+            },
+            roomId: {
+              eq: roomId
             }
           }
         ]
@@ -42,4 +45,4 @@ const beforeSaveHook = (ctx, next) => {
   );
 };
 
-module.exports = beforeSaveHook;
+module.exports = { bookingBeforeSaveHook };
