@@ -3,9 +3,14 @@
   "extends": ["prettier", "loopback"],
   "rules": {
     "object-curly-spacing": 0,
-    "prettier/prettier": "error",
-    "quotes": ["error", "double", "avoid-escape"],
+    "prettier/prettier": [
+      "error",
+      {
+        "singleQuote": false
+      }
+    ],
     "comma-dangle": ["error", "never"],
+    "max-len": ["error", { "code": 100 }],
     "strict": 0
   },
   "env": {
