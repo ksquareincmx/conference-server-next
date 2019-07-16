@@ -1,0 +1,47 @@
+{
+  "name": "create",
+  "version": "2.0.0",
+  "main": "server/server.js",
+  "engines": {
+    "node": ">=6"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "start": "nodemon .",
+    "posttest": "npm run lint && npm audit"
+  },
+  "jest": {
+    "preset": "jest-preset-loopback"
+  },
+  "dependencies": {
+    "compression": "^1.0.3",
+    "cors": "^2.5.2",
+    "helmet": "^3.10.0",
+    "loopback": "^3.22.0",
+    "loopback-boot": "^2.6.5",
+    "loopback-component-explorer": "^6.2.0",
+    "moment": "^2.24.0",
+    "serve-favicon": "^2.0.1",
+    "strong-error-handler": "^3.0.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "eslint": "^6.0.1",
+    "eslint-config-loopback": "^8.0.0",
+    "eslint-config-prettier": "^6.0.0",
+    "eslint-plugin-prettier": "^3.1.0",
+    "jest": "^24.8.0",
+    "jest-preset-loopback": "^1.0.0",
+    "nodemon": "^1.19.1",
+    "prettier": "^1.18.2",
+    "superagent": "^5.1.0",
+    "supertest": "^4.0.2"
+  },
+  "repository": {
+    "type": "",
+    "url": ""
+  },
+  "license": "UNLICENSED",
+  "description": "create"
+}

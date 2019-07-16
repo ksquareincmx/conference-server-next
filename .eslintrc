@@ -1,0 +1,11 @@
+{
+  "plugins": ["prettier"],
+  "extends": ["prettier", "loopback"],
+  "rules": {
+    "object-curly-spacing": 0,
+    "prettier/prettier": "error",
+    "quotes": ["error", "double", "avoid-escape"],
+    "comma-dangle": ["error", "never"],
+    "strict": 0
+  }
+}
