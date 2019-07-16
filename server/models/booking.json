@@ -24,16 +24,6 @@
     }
   },
   "validations": [],
-  "relations": {
-    "roomId": {
-      "type": "belongsTo",
-      "model": "Room",
-      "foreignKey": "",
-      "options": {
-        "nestRemoting": true
-      }
-    }
-  },
   "acls": [],
   "methods": {}
 }
