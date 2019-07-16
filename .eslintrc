@@ -1,11 +1,16 @@
 {
   "plugins": ["prettier"],
-  "extends": ["prettier", "loopback"],
+  "extends": ["loopback", "plugin:prettier/recommended"],
   "rules": {
     "object-curly-spacing": 0,
-    "prettier/prettier": "error",
-    "quotes": ["error", "double", "avoid-escape"],
+    "prettier/prettier": [
+      "error",
+      {
+        "singleQuote": false
+      }
+    ],
     "comma-dangle": ["error", "never"],
-    "strict": 0
+    "strict": 0,
+    "max-len": ["error", { "code": 100 }]
   }
 }

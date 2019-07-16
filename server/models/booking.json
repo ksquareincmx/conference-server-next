@@ -21,6 +21,11 @@
     "eventId": {
       "type": "string",
       "required": true
+    },
+    "attendees": {
+      "type": ["string"],
+      "required": false,
+      "default": []
     }
   },
   "validations": [],
