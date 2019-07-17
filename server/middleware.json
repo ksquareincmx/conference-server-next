@@ -32,12 +32,12 @@
   },
   "session": {},
   "auth": {},
-  "parse": {},
+  "parse": {
+    "body-parser#json": {}
+  },
   "routes": {
     "loopback#rest": {
-      "paths": [
-        "${restApiRoot}"
-      ]
+      "paths": ["${restApiRoot}"]
     }
   },
   "files": {},

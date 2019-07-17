@@ -3,15 +3,17 @@
 // This file is licensed under the MIT License.
 // License text available at https://opensource.org/licenses/MIT
 "use strict";
-
+require("dotenv").config();
 const loopback = require("loopback");
 const boot = require("loopback-boot");
 const path = require("path");
+const { googleAuthRouter } = require("./googleAuthRouter");
 
 const app = (module.exports = loopback());
 
 app.start = function() {
   // start the web server
+  app.use(googleAuthRouter);
   return app.listen(function() {
     app.emit("started");
     const baseUrl = app.get("url").replace(/\/$/, "");
