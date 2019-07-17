@@ -1,10 +1,8 @@
 const supertest = require("supertest");
-const server = require("../../../server/server");
-const { restApiRoot } = require("../../../server/config.local");
+const server = require("../../server");
+const urlMaker = require("../testUtils/urlMaker");
 
 const request = supertest(server);
-
-const urlMaker = str => `${restApiRoot}/${str}`;
 
 describe("Booking", () => {
   it("/ GET all Bookings as array", async () => {

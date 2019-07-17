@@ -1,5 +1,5 @@
 {
-  "name": "create",
+  "name": "conferecne-server-next",
   "version": "2.0.0",
   "main": "server/server.js",
   "engines": {
@@ -11,7 +11,10 @@
     "posttest": "npm run lint && npm audit"
   },
   "jest": {
-    "preset": "jest-preset-loopback"
+    "preset": "jest-preset-loopback",
+    "testPathIgnorePatterns": [
+      "/testUtils/"
+    ]
   },
   "dependencies": {
     "compression": "^1.0.3",
@@ -30,6 +33,7 @@
     "eslint": "^6.0.1",
     "eslint-config-loopback": "^8.0.0",
     "eslint-config-prettier": "^6.0.0",
+    "eslint-plugin-jest": "^22.8.0",
     "eslint-plugin-prettier": "^3.1.0",
     "jest": "^24.8.0",
     "jest-preset-loopback": "^1.0.0",
