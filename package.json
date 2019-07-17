@@ -1,7 +1,7 @@
 {
   "name": "conference-server",
   "version": "2.0.0",
-  "main": "server/server.js",
+  "main": "server/main.js",
   "engines": {
     "node": ">=6"
   },
@@ -15,7 +15,8 @@
   "jest": {
     "preset": "jest-preset-loopback",
     "testPathIgnorePatterns": [
-      "/testUtils/"
+      "/testUtils/",
+      "/testBootScripts/"
     ]
   },
   "dependencies": {
