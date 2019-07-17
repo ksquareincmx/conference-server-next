@@ -1,1 +1,1 @@
-# conference-server@next
+conference-server-next
