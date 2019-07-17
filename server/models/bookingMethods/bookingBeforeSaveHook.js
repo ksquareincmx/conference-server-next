@@ -10,23 +10,20 @@ const bookingBeforeSaveHook = (ctx, next) => {
       message: "Start and end cannot be the same time"
     });
   }
+
   Booking.findOne(
     {
       where: {
-        and: [
+        roomId,
+        or: [
           {
-            start: {
-              // gte: end
+            end: {
               between: [start, end]
             }
           },
           {
-            end: {
-              // lte: start
+            start: {
               between: [start, end]
-            },
-            roomId: {
-              eq: roomId
             }
           }
         ]
