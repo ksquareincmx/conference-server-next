@@ -1,5 +1,5 @@
 {
-  "plugins": ["prettier"],
+  "plugins": ["prettier", "jest"],
   "extends": ["prettier", "loopback"],
   "rules": {
     "object-curly-spacing": 0,
@@ -7,5 +7,8 @@
     "quotes": ["error", "double", "avoid-escape"],
     "comma-dangle": ["error", "never"],
     "strict": 0
+  },
+  "env": {
+    "jest/globals": true
   }
 }
