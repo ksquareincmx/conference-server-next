@@ -34,7 +34,7 @@ const bookingBeforeSaveHook = (ctx, next) => {
       if (booking) {
         bookingErr = {
           status: 400,
-          message: "There is an appointment overlaping" // TODO: add room
+          message: "There is already an appointment on this room" // TODO: add room
         };
       }
       next(bookingErr);
