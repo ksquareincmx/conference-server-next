@@ -1,5 +1,5 @@
 {
-  "name": "conferecne-server-next",
+  "name": "conference-server",
   "version": "2.0.0",
   "main": "server/server.js",
   "engines": {
@@ -7,13 +7,16 @@
   },
   "scripts": {
     "lint": "eslint .",
-    "start": "nodemon .",
-    "posttest": "npm run lint && npm audit"
+    "start": "cross-env NODE_ENV=development nodemon .",
+    "production": "cross-env NODE_ENV=production node .",
+    "posttest": "npm run lint && npm audit",
+    "format": "prettier --write server/**/*.js"
   },
   "jest": {
     "preset": "jest-preset-loopback",
     "testPathIgnorePatterns": [
-      "/testUtils/"
+      "/testUtils/",
+      "/testBootScripts/"
     ]
   },
   "dependencies": {
@@ -30,6 +33,7 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.7.0",
+    "cross-env": "^5.2.0",
     "eslint": "^6.0.1",
     "eslint-config-loopback": "^8.0.0",
     "eslint-config-prettier": "^6.0.0",
@@ -47,5 +51,5 @@
     "url": ""
   },
   "license": "UNLICENSED",
-  "description": "create"
+  "description": "Manage conference rooms inside your organization "
 }

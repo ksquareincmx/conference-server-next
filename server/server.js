@@ -6,6 +6,7 @@
 
 const loopback = require("loopback");
 const boot = require("loopback-boot");
+const path = require("path");
 
 const app = (module.exports = loopback());
 
@@ -24,9 +25,16 @@ app.start = function() {
 
 // Bootstrap the application, configure models, datasources and middleware.
 // Sub-apps like REST API are mounted via boot scripts.
-boot(app, { appRootDir: __dirname }, function(err) {
-  if (err) throw err;
+boot(
+  app,
+  {
+    appRootDir: __dirname,
+    bootDirs: [path.resolve(__dirname, "bootScripts")]
+  },
+  function(err) {
+    if (err) throw err;
 
-  // start the server if `$ node server.js`
-  if (require.main === module) app.start();
-});
+    // start the server if `$ node server.js`
+    if (require.main === module) app.start();
+  }
+);

@@ -72,7 +72,9 @@ describe("server check", () => {
   });
 
   it("log explorer url when start is called", () => {
-    const get = jest.fn(term => (term === "url" ? "url" : { mountPath: "foo" }));
+    const get = jest.fn(term =>
+      term === "url" ? "url" : { mountPath: "foo" }
+    );
     const listen = jest.fn(cb => cb());
     const emit = jest.fn();
     console.log = jest.fn();

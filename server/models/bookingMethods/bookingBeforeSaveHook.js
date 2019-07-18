@@ -1,7 +1,7 @@
-const beforeSaveHook = (ctx, next) => {
+const bookingBeforeSaveHook = (ctx, next) => {
   const { Model: Booking } = ctx;
   const { instance } = ctx;
-  const { start, end } = instance;
+  const { start, end, roomId } = instance;
 
   // TODO: do this in a fancier fashion
   if (start.toString() === end.toString()) {
@@ -10,19 +10,19 @@ const beforeSaveHook = (ctx, next) => {
       message: "Start and end cannot be the same time"
     });
   }
+
   Booking.findOne(
     {
       where: {
-        and: [
+        roomId,
+        or: [
           {
-            start: {
-              // gte: end
+            end: {
               between: [start, end]
             }
           },
           {
-            end: {
-              // lte: start
+            start: {
               between: [start, end]
             }
           }
@@ -42,4 +42,4 @@ const beforeSaveHook = (ctx, next) => {
   );
 };
 
-module.exports = beforeSaveHook;
+module.exports = { bookingBeforeSaveHook };

@@ -21,19 +21,14 @@
     "eventId": {
       "type": "string",
       "required": true
+    },
+    "attendees": {
+      "type": ["string"],
+      "required": false,
+      "default": []
     }
   },
   "validations": [],
-  "relations": {
-    "roomId": {
-      "type": "belongsTo",
-      "model": "Room",
-      "foreignKey": "",
-      "options": {
-        "nestRemoting": true
-      }
-    }
-  },
   "acls": [],
   "methods": {}
 }

@@ -1,3 +1,3 @@
 const { restApiRoot } = require("../../config.local");
 
-module.exports = str => `${restApiRoot}/${str}`;
+module.exports = str => `${restApiRoot}${str}`;

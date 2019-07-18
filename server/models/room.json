@@ -24,7 +24,13 @@
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "bookings": {
+      "type": "hasMany",
+      "model": "Booking",
+      "foreignKey": "roomId"
+    }
+  },
   "acls": [],
   "methods": {}
 }
