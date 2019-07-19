@@ -15,9 +15,12 @@ beforeEach(() => {
 
 describe("Booking", () => {
   test("GET /Bookings as 3 length array", async () => {
-    const { body } = await request
+    const res = await request
       .get(urlMaker("/bookings"))
       .set("Authorization", "USER_1");
+
+    const { body, status } = res;
+    expect(status).toBe(200);
     expect(Array.isArray(body)).toBe(true);
     expect(body.length).toBe(3);
   });

@@ -1,4 +1,6 @@
-const { bookingAccessHook } = require("./bookingMethods/bookingAccessHook");
+const {
+  bookingAfterFindRemoteHook
+} = require("./bookingMethods/bookingAfterFindRemoteHook");
 const {
   bookingBeforeSaveHook
 } = require("./bookingMethods/bookingBeforeSaveHook");
@@ -6,5 +8,5 @@ const {
 module.exports = function(Booking) {
   Booking.observe("before save", bookingBeforeSaveHook);
 
-  Booking.observe("access", bookingAccessHook);
+  Booking.afterRemote("find.**", bookingAfterFindRemoteHook);
 };

@@ -9,7 +9,7 @@ describe("App basic http responses", () => {
     expect(res.status).toBe(200);
   });
 
-  it("GET /explorer", async () => {
+  it("GET /explorer/", async () => {
     const res = await request.get("/explorer/");
     expect(res.status).toBe(200);
   });
