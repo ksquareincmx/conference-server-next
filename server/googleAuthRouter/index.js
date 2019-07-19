@@ -37,15 +37,61 @@ googleAuthRouter.post(googleAuthUrl, async (req, res) => {
     }
 
     // Check if user exists
-    let { User } = req.app.models;
+    let { user, AccessToken } = req.app.models;
 
-    let user = await User.findOne({
+    let conferenceUser = await user.findOne({
       where: { email }
     });
 
-    return res.send(ticket);
+    if (!conferenceUser) {
+      conferenceUser = await user.create({
+        email,
+        name,
+        picture,
+        password: "DUMMYPASS"
+      });
+    }
+    // getCredentials
+    /**
+     * steps
+     * createToken
+     * refreshToken
+     * returns
+     * token
+     * expires
+     * resfresh_token
+     * user: id, name, email, role
+     * profile: user.profile
+     */
+    const token = await AccessToken.create({
+      userId: conferenceUser.id
+    });
+
+    const data = {
+      expires: token.ttl,
+      profile: {
+        id: 71,
+        locale: "es",
+        time_zone: "America/Mexico_City",
+        userId: 71
+      },
+      token: token.id,
+      resfresh_token: {
+        expires: 1595087817134,
+        expiresIn: 31622400,
+        token: token.id
+      },
+      user: {
+        id: conferenceUser.id,
+        name: conferenceUser.name,
+        email: conferenceUser.email,
+        role: conferenceUser.role
+      }
+    };
+
+    return res.send(data);
   } catch (err) {
-    console.error("Error on Google Login", err);
+    log.error("Error on Google Login", err);
     if (
       err.errors != null &&
       err.errors.length &&

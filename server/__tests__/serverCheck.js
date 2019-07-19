@@ -56,7 +56,8 @@ describe("server check", () => {
     const get = jest.fn(() => "foo");
     const listen = jest.fn(cb => cb());
     const emit = jest.fn();
-    loopback.mockReturnValue({ listen, get, emit });
+    const use = jest.fn();
+    loopback.mockReturnValue({ listen, get, emit, use });
     getApp().start();
     expect(emit).toBeCalledWith("started");
   });
@@ -66,7 +67,8 @@ describe("server check", () => {
     const listen = jest.fn(cb => cb());
     const emit = jest.fn();
     console.log = jest.fn();
-    loopback.mockReturnValue({ listen, get, emit });
+    const use = jest.fn();
+    loopback.mockReturnValue({ listen, get, emit, use });
     getApp().start();
     expect(console.log).toBeCalledWith(expect.any(String), "foo/api");
   });
@@ -78,7 +80,8 @@ describe("server check", () => {
     const listen = jest.fn(cb => cb());
     const emit = jest.fn();
     console.log = jest.fn();
-    loopback.mockReturnValue({ listen, get, emit });
+    const use = jest.fn((req, res, next) => {});
+    loopback.mockReturnValue({ get, listen, emit, use });
     getApp().start();
     expect(console.log).toBeCalledWith(expect.any(String), "url", "foo");
   });
