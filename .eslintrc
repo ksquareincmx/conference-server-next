@@ -9,8 +9,8 @@
         "singleQuote": false
       }
     ],
-    // "comma-dangle": ["error", "never"],
-    // "max-len": ["error", { "code": 100 }],
+    "comma-dangle": ["error", "never"],
+    "max-len": ["error", { "code": 100 }],
     "strict": 0,
     "no-undef": 1
   },
