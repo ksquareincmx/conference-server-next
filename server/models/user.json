@@ -1,26 +1,26 @@
 {
-  "name": "Room",
-  "base": "PersistedModel",
+  "name": "user",
+  "base": "User",
   "idInjection": true,
   "options": {
     "validateUpsert": true
   },
   "properties": {
+    "picture": {
+      "type": "string",
+      "default": ""
+    },
     "name": {
       "type": "string",
       "required": true
     },
-    "bgColor": {
+    "role": {
       "type": "string",
-      "required": true
+      "required": true,
+      "default": "user"
     },
-    "txtColor": {
-      "type": "string",
-      "required": true
-    },
-    "presence": {
-      "type": "boolean",
-      "default": false
+    "profile": {
+      "type": "string"
     }
   },
   "validations": [],
@@ -28,27 +28,21 @@
     "bookings": {
       "type": "hasMany",
       "model": "Booking",
-      "foreignKey": "roomId"
+      "foreignKey": "userId"
     }
   },
   "acls": [
     {
       "accessType": "*",
       "principalType": "ROLE",
-      "principalId": "$everyone",
-      "permission": "DENY"
-    },
-    {
-      "accessType": "READ",
-      "principalType": "ROLE",
-      "principalId": "$everyone",
+      "principalId": "$owner",
       "permission": "ALLOW"
     },
     {
       "accessType": "*",
       "principalType": "ROLE",
-      "principalId": "admin",
-      "permission": "ALLOW"
+      "principalId": "$everyone",
+      "permission": "DENY"
     }
   ],
   "methods": {}
