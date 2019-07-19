@@ -22,13 +22,16 @@
   "dependencies": {
     "compression": "^1.0.3",
     "cors": "^2.5.2",
+    "dotenv": "^8.0.0",
+    "google-auth-library": "^4.2.5",
     "helmet": "^3.10.0",
     "loopback": "^3.22.0",
     "loopback-boot": "^2.6.5",
     "loopback-component-explorer": "^6.2.0",
     "moment": "^2.24.0",
     "serve-favicon": "^2.0.1",
-    "strong-error-handler": "^3.0.0"
+    "strong-error-handler": "^3.0.0",
+    "winston": "^3.2.1"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

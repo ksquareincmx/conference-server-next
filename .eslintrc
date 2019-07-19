@@ -1,6 +1,6 @@
 {
   "plugins": ["prettier", "jest"],
-  "extends": ["loopback", "plugin:prettier/recommended"],
+  "extends": ["loopback", "prettier"],
   "rules": {
     "object-curly-spacing": 0,
     "prettier/prettier": [
@@ -9,9 +9,10 @@
         "singleQuote": false
       }
     ],
-    "comma-dangle": ["error", "never"],
-    "max-len": ["error", { "code": 100 }],
-    "strict": 0
+    // "comma-dangle": ["error", "never"],
+    // "max-len": ["error", { "code": 100 }],
+    "strict": 0,
+    "no-undef": 1
   },
   "parserOptions": {
     "ecmaVersion": 8

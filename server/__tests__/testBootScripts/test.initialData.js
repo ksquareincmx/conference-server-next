@@ -1,6 +1,11 @@
 module.exports = App => {
   const { Room, Booking } = App.models;
 
+  const timeMaker = (minutes = 1, initialDate) => {
+    initialDate = initialDate || Date.now();
+    return initialDate + 1000 * 60 * minutes;
+  };
+
   Room.create(
     [
       {
@@ -9,7 +14,7 @@ module.exports = App => {
         txtColor: "#FFF"
       },
       {
-        name: "RedRumWhiteTxt",
+        name: "RedRum",
         bgColor: "#ff0000",
         txtColor: "#FFF"
       }
@@ -18,23 +23,23 @@ module.exports = App => {
       Booking.create([
         {
           description: "Say Hello",
-          start: 1563208353013,
-          end: 1563208386518,
+          start: timeMaker(30),
+          end: timeMaker(60),
           eventId: "falkdsjf0i12",
           roomId: room1.id,
           attendees: ["martiuh@gmail.com"]
         },
         {
           description: "Say GoodBye",
-          start: 1563299709242,
-          end: 1563299724720,
+          start: timeMaker(120),
+          end: timeMaker(155),
           eventId: "fasalkjas",
           roomId: room1.id
         },
         {
           description: "Stand Still",
-          start: 156320835301390,
-          end: 15632997247201,
+          start: timeMaker(200),
+          end: timeMaker(230),
           eventId: "fadflkaj",
           roomId: room2.id
         }
