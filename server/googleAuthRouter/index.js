@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 const { OAuth2Client } = require("google-auth-library");
 const { Router } = require("express");
 const { isEmpty } = require("../utils");
