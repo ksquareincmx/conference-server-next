@@ -31,7 +31,10 @@ boot(
   app,
   {
     appRootDir: __dirname,
-    bootDirs: [path.resolve(__dirname, "bootScripts")]
+    bootDirs: [
+      path.resolve(__dirname, "bootScripts"),
+      path.resolve(__dirname, "devBootScripts")
+    ]
   },
   function(err) {
     if (err) throw err;
