@@ -18,9 +18,8 @@
       "type": "date",
       "required": true
     },
-    "eventId": {
-      "type": "string",
-      "required": true
+    "event_id": {
+      "type": "string"
     },
     "attendees": {
       "type": ["string"],
@@ -33,12 +32,12 @@
     "user": {
       "type": "belongsTo",
       "model": "user",
-      "foreignKey": "userId"
+      "foreignKey": "user_id"
     },
     "room": {
       "type": "belongsTo",
       "model": "Room",
-      "foreignKey": "roomId"
+      "foreignKey": "room_id"
     }
   },
   "acls": [

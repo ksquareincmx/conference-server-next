@@ -10,11 +10,11 @@
       "type": "string",
       "required": true
     },
-    "bgColor": {
+    "bg_color": {
       "type": "string",
       "required": true
     },
-    "txtColor": {
+    "txt_color": {
       "type": "string",
       "required": true
     },
@@ -28,7 +28,7 @@
     "bookings": {
       "type": "hasMany",
       "model": "Booking",
-      "foreignKey": "roomId"
+      "foreignKey": "room_id"
     }
   },
   "acls": [

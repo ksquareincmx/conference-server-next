@@ -86,7 +86,8 @@ googleAuthRouter.post(googleAuthUrl, async (req, res) => {
         id: conferenceUser.id,
         name: conferenceUser.name,
         email: conferenceUser.email,
-        role: conferenceUser.role
+        role: conferenceUser.role,
+        picture: conferenceUser.picture
       }
     };
 

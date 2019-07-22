@@ -9,13 +9,13 @@ module.exports = async App => {
   const [Room1, Room2] = await Room.create([
     {
       name: "WhiteText",
-      bgColor: "#000",
-      txtColor: "#FFF"
+      bg_color: "#000",
+      txt_color: "#FFF"
     },
     {
       name: "RedRum",
-      bgColor: "#ff0000",
-      txtColor: "#FFF"
+      bg_color: "#ff0000",
+      txt_color: "#FFF"
     }
   ]);
 
@@ -35,7 +35,7 @@ module.exports = async App => {
   AccessToken.create([
     {
       id: "USER_1",
-      userId: User1.id
+      user_id: User1.id
     }
   ]);
 
@@ -44,23 +44,23 @@ module.exports = async App => {
       description: "Say Hello",
       start: timeMaker(30),
       end: timeMaker(60),
-      eventId: "falkdsjf0i12",
-      roomId: Room1.id,
+      room_id: Room1.id,
+      user_id: User1.id,
       attendees: ["martiuh@gmail.com"]
     },
     {
       description: "Say GoodBye",
       start: timeMaker(120),
       end: timeMaker(155),
-      eventId: "fasalkjas",
-      roomId: Room1.id
+      user_id: User2.id,
+      room_id: Room1.id
     },
     {
       description: "Stand Still",
       start: timeMaker(200),
       end: timeMaker(230),
-      eventId: "fadflkaj",
-      roomId: Room2.id
+      room_id: Room2.id,
+      user_id: User1.id
     }
   ]);
 };
