@@ -1,7 +1,7 @@
 const bookingBeforeSaveHook = (ctx, next) => {
   const { Model: Booking } = ctx;
   const { instance } = ctx;
-  const { start, end, roomId } = instance;
+  const { start, end, room_id } = instance;
 
   // TODO: do this in a fancier fashion
   if (start.toString() === end.toString()) {
@@ -14,7 +14,7 @@ const bookingBeforeSaveHook = (ctx, next) => {
   Booking.findOne(
     {
       where: {
-        roomId,
+        room_id,
         or: [
           {
             end: {
