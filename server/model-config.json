@@ -14,7 +14,7 @@
       "user": {
         "type": "belongsTo",
         "model": "user",
-        "foreignKey": "user_id"
+        "foreignKey": "userId"
       }
     }
   },
