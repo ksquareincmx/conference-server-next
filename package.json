@@ -13,13 +13,6 @@
     "format": "prettier --write server/**/*.js",
     "test:watch": "jest --watch"
   },
-  "jest": {
-    "preset": "jest-preset-loopback",
-    "testPathIgnorePatterns": [
-      "/testUtils/",
-      "/testBootScripts/"
-    ]
-  },
   "dependencies": {
     "compression": "^1.0.3",
     "cors": "^2.5.2",

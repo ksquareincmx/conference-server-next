@@ -22,12 +22,12 @@ module.exports = async App => {
   const [User1, User2] = await user.create([
     {
       email: "foo@gmail.com",
-      name: "Foo González",
+      name: "Bar González",
       password: "HAHA"
     },
     {
       email: "bar@gmail.com",
-      name: "Bar Ruano",
+      name: "Foo Ruano",
       password: "HEHE"
     }
   ]);
@@ -35,7 +35,7 @@ module.exports = async App => {
   AccessToken.create([
     {
       id: "USER_1",
-      user_id: User1.id
+      userId: User1.id
     }
   ]);
 
@@ -47,20 +47,6 @@ module.exports = async App => {
       room_id: Room1.id,
       user_id: User1.id,
       attendees: ["martiuh@gmail.com"]
-    },
-    {
-      description: "Say GoodBye",
-      start: timeMaker(120),
-      end: timeMaker(155),
-      user_id: User2.id,
-      room_id: Room1.id
-    },
-    {
-      description: "Stand Still",
-      start: timeMaker(200),
-      end: timeMaker(230),
-      room_id: Room2.id,
-      user_id: User1.id
     }
   ]);
 };
