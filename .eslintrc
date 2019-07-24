@@ -9,10 +9,11 @@
         "singleQuote": false
       }
     ],
-    // "comma-dangle": ["error", "never"],
-    // "max-len": ["error", { "code": 100 }],
+    "comma-dangle": ["error", "never"],
+    "max-len": ["error", { "code": 100 }],
     "strict": 0,
-    "no-undef": 1
+    "no-undef": 1,
+    "camelcase": 0
   },
   "parserOptions": {
     "ecmaVersion": 8

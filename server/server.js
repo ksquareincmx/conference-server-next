@@ -13,8 +13,8 @@ const app = (module.exports = loopback());
 
 app.start = function() {
   // start the web server
-  app.use(googleAuthRouter);
   return app.listen(function() {
+    app.use(googleAuthRouter);
     app.emit("started");
     const baseUrl = app.get("url").replace(/\/$/, "");
     console.log("Web server listening at: %s", baseUrl);
@@ -31,7 +31,10 @@ boot(
   app,
   {
     appRootDir: __dirname,
-    bootDirs: [path.resolve(__dirname, "bootScripts")]
+    bootDirs: [
+      path.resolve(__dirname, "bootScripts"),
+      path.resolve(__dirname, "devBootScripts")
+    ]
   },
   function(err) {
     if (err) throw err;

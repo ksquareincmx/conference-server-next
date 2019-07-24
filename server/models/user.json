@@ -28,7 +28,7 @@
     "bookings": {
       "type": "hasMany",
       "model": "Booking",
-      "foreignKey": "userId"
+      "foreignKey": "user_id"
     }
   },
   "acls": [

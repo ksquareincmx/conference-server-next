@@ -18,14 +18,11 @@
       "type": "date",
       "required": true
     },
-    "eventId": {
-      "type": "string",
-      "required": true
+    "event_id": {
+      "type": "string"
     },
     "attendees": {
-      "type": [
-        "string"
-      ],
+      "type": ["string"],
       "required": false,
       "default": []
     }
@@ -35,12 +32,12 @@
     "user": {
       "type": "belongsTo",
       "model": "user",
-      "foreignKey": "userId"
+      "foreignKey": "user_id"
     },
     "room": {
       "type": "belongsTo",
       "model": "Room",
-      "foreignKey": "roomId"
+      "foreignKey": "room_id"
     }
   },
   "acls": [
@@ -51,10 +48,11 @@
       "permission": "DENY"
     },
     {
-      "accessType": "READ",
+      "accessType": "EXECUTE",
       "principalType": "ROLE",
       "principalId": "$authenticated",
-      "permission": "ALLOW"
+      "permission": "ALLOW",
+      "property": "create"
     },
     {
       "accessType": "*",
@@ -67,6 +65,12 @@
       "principalType": "ROLE",
       "principalId": "$everyone",
       "permission": "DENY"
+    },
+    {
+      "accessType": "READ",
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW"
     }
   ],
   "methods": {}

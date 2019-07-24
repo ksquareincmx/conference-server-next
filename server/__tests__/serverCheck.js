@@ -47,7 +47,8 @@ describe("server check", () => {
 
   it("calls express listen when start is called", () => {
     const listen = jest.fn();
-    loopback.mockReturnValue({ listen });
+    const use = jest.fn();
+    loopback.mockReturnValue({ listen, use });
     getApp().start();
     expect(listen).toBeCalledWith(expect.any(Function));
   });

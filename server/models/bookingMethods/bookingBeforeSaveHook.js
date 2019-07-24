@@ -1,20 +1,23 @@
+const cannotOverlap = () => ({
+  status: 422,
+  message: "There is already an appointment on this room" // TODO: add room
+});
+
 const bookingBeforeSaveHook = (ctx, next) => {
   const { Model: Booking } = ctx;
   const { instance } = ctx;
-  const { start, end, roomId } = instance;
+  const { start, end, room_id } = instance;
+  const hasInstanceId = instance.id || false;
 
   // TODO: do this in a fancier fashion
   if (start.toString() === end.toString()) {
-    return next({
-      status: 400,
-      message: "Start and end cannot be the same time"
-    });
+    return next(cannotOverlap());
   }
 
-  Booking.findOne(
+  Booking.find(
     {
       where: {
-        roomId,
+        room_id,
         or: [
           {
             end: {
@@ -31,11 +34,14 @@ const bookingBeforeSaveHook = (ctx, next) => {
     },
     (err, booking) => {
       let bookingErr = err;
-      if (booking) {
-        bookingErr = {
-          status: 400,
-          message: "There is already an appointment on this room" // TODO: add room
-        };
+      const [firstBooking] = booking;
+      if (firstBooking && ctx.isNewInstance && booking.length === 1) {
+        bookingErr = cannotOverlap();
+      } else if (firstBooking && !ctx.isNewInstance) {
+        // Will update
+        if (firstBooking.id === instance.idx) {
+          // return next();
+        }
       }
       next(bookingErr);
     }

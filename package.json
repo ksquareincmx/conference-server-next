@@ -9,15 +9,9 @@
     "lint": "eslint .",
     "start": "cross-env NODE_ENV=development nodemon .",
     "production": "cross-env NODE_ENV=production node .",
-    "posttest": "npm run lint && npm audit",
-    "format": "prettier --write server/**/*.js"
-  },
-  "jest": {
-    "preset": "jest-preset-loopback",
-    "testPathIgnorePatterns": [
-      "/testUtils/",
-      "/testBootScripts/"
-    ]
+    "posttest": "yarn lint && yarn audit",
+    "format": "prettier --write server/**/*.js",
+    "test:watch": "jest --watch"
   },
   "dependencies": {
     "compression": "^1.0.3",
@@ -40,7 +34,7 @@
     "eslint": "^6.0.1",
     "eslint-config-loopback": "^8.0.0",
     "eslint-config-prettier": "^6.0.0",
-    "eslint-plugin-jest": "^22.8.0",
+    "eslint-plugin-jest": "^22.11.1",
     "eslint-plugin-prettier": "^3.1.0",
     "jest": "^24.8.0",
     "jest-preset-loopback": "^1.0.0",
