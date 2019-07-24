@@ -36,6 +36,10 @@ module.exports = async App => {
     {
       id: "USER_1",
       userId: User1.id
+    },
+    {
+      id: "USER_2",
+      userId: User2.id
     }
   ]);
 
