@@ -27,8 +27,7 @@ describe("GET /Bookings", () => {
 
 describe("POST /Bookings", () => {
   test("Post a single boking", async () => {
-    const now = moment();
-    const validStart = moment(now.toISOString()).add("35", "minutes");
+    const validStart = moment().add("35", "minutes");
     const validEnd = moment(validStart.toISOString()).add("15", "minutes");
     const room_id = 2;
 
@@ -207,8 +206,7 @@ describe("DELETE /Bookings", () => {
   });
 
   test("Cannot delete other users bookings", async () => {
-    const now = moment().add("5", "hours");
-    const start = moment(now.toISOString()).add("4", "hours");
+    const start = moment().add("4", "hours");
     const end = moment(start.toISOString()).add("30", "minutes");
     const room_id = 2;
     const user_id = 1;
@@ -227,7 +225,6 @@ describe("DELETE /Bookings", () => {
       });
 
     const { id } = req.body;
-
     expect(req.status).toBe(200);
 
     const deleteRequest = await request
