@@ -3,7 +3,7 @@
 // This file is licensed under the MIT License.
 // License text available at https://opensource.org/licenses/MIT
 "use strict";
-
+require("dotenv").config();
 const boot = require("loopback-boot");
 const path = require("path");
 

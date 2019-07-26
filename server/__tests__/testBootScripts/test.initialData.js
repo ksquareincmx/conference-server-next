@@ -19,7 +19,7 @@ module.exports = async App => {
     }
   ]);
 
-  const [User1, User2] = await user.create([
+  const [User1, User2, User3] = await user.create([
     {
       email: "foo@gmail.com",
       name: "Bar González",
@@ -29,6 +29,12 @@ module.exports = async App => {
       email: "bar@gmail.com",
       name: "Foo Ruano",
       password: "HEHE"
+    },
+    {
+      email: "baz@gmail.com",
+      name: "Admin Administer",
+      password: "HIHI",
+      role: "admin"
     }
   ]);
 
@@ -40,6 +46,10 @@ module.exports = async App => {
     {
       id: "USER_2",
       userId: User2.id
+    },
+    {
+      id: "ADMIN",
+      userId: User3.id
     }
   ]);
 
