@@ -10,29 +10,24 @@ class GoogleCalendarService {
     this.params = {
       sendUpdates
     };
-
-    this.params = {};
-    this.timeZone = "";
-    this.calendarId = "";
-    this.calendar = {};
     this.timeZone = timeZone;
     this.calendarId = calendarId;
     this.calendar = new CalendarAPI(config.serviceAccount);
   }
 
   async insertEvent(start, end, description, attendees, location) {
-    let event = this.defineEvent(start, end, description, location);
-
-    attendees.forEach(attendee => {
-      let email = {
-        email: attendee
-      };
-      event.attendees.push(email);
-    });
+    const event = this.defineEvent(
+      start,
+      end,
+      description,
+      location,
+      attendees
+    );
 
     try {
       const googleEvent = await this.calendar.Events.insert(
         this.calendarId,
+        event,
         this.params
       );
       return googleEvent;
@@ -42,14 +37,13 @@ class GoogleCalendarService {
   }
 
   async updateEvent(eventId, start, end, description, attendees, location) {
-    let event = this.defineEvent(start, end, description, location);
-
-    attendees.forEach(attendee => {
-      let email = {
-        email: attendee
-      };
-      event.attendees.push(email);
-    });
+    const event = this.defineEvent(
+      start,
+      end,
+      description,
+      location,
+      attendees
+    );
 
     try {
       const googleEvent = await this.calendar.Events.update(
@@ -77,8 +71,8 @@ class GoogleCalendarService {
     }
   }
 
-  defineEvent(start, end, description, location) {
-    let event = {
+  defineEvent(start, end, description, location, attendees = []) {
+    const event = {
       location,
       start: {
         dateTime: start,
@@ -89,7 +83,9 @@ class GoogleCalendarService {
         timeZone: this.timeZone
       },
       summary: description,
-      attendees: []
+      attendees: attendees.map(attendee => ({
+        email: attendee
+      }))
     };
     return event;
   }

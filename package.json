@@ -10,7 +10,7 @@
     "start": "cross-env NODE_ENV=development nodemon .",
     "production": "cross-env NODE_ENV=production node .",
     "posttest": "yarn lint && yarn audit",
-    "format": "prettier --write server/**/*.js",
+    "format": "prettier --write server/**/**/*.js",
     "test:watch": "jest --watch"
   },
   "dependencies": {

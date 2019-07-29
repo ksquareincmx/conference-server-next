@@ -25,6 +25,9 @@
       "type": ["string"],
       "required": false,
       "default": []
+    },
+    "location": {
+      "type": "string"
     }
   },
   "validations": [],

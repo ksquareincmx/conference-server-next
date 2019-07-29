@@ -7,7 +7,7 @@ const { restApiRoot } = require("../config.local");
 const {
   config: { auth }
 } = require("../config/config");
-
+const uuidv4 = require("uuid/v4");
 const gAuthClient = new OAuth2Client(auth.google.clientId);
 
 const googleAuthRouter = Router();
@@ -49,8 +49,13 @@ googleAuthRouter.post(googleAuthUrl, async (req, res) => {
         email,
         name,
         picture,
-        password: "DUMMYPASS"
+        password: uuidv4()
       });
+    }
+
+    // If the user was previously made and has no picture, update picture
+    if (!conferenceUser.picture || conferenceUser.picture === "") {
+      conferenceUser = await conferenceUser.updateAttribute("picture", picture);
     }
     // getCredentials
     /**
@@ -87,7 +92,7 @@ googleAuthRouter.post(googleAuthUrl, async (req, res) => {
         name: conferenceUser.name,
         email: conferenceUser.email,
         role: conferenceUser.role,
-        picture: conferenceUser.picture
+        picture: conferenceUser.picture || picture
       }
     };
 
