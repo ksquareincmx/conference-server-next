@@ -40,7 +40,11 @@ const onlyInOfficeHours = (start, end, timezone = "America/Mexico_City") => {
 
   return (
     isAvailableDay(startDate.isoWeekday(), officeHours.workingDays) &&
-    isAvailableHour(startDate.format("HH:mm"), endDate.format("HH:mm"), firstWorkingHours)
+    isAvailableHour(
+      startDate.format("HH:mm"),
+      endDate.format("HH:mm"),
+      firstWorkingHours
+    )
   );
 };
 
