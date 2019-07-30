@@ -1,11 +1,12 @@
 const moment = require("moment-timezone");
 const { calendarService } = require("../../services/calendarService");
 const { log } = require("../../libraries/log");
-
-const getActualDate = () =>
-  moment()
-    .utc()
-    .format();
+const { queryBuilder } = require("../../queries");
+const {
+  errorFactory: {
+    booking: { isAlreadyBooked }
+  }
+} = require("../../factories/ErrorFactory");
 
 // TODO: have a some sort of config file for setting custom office preferences
 const officeHours = {
@@ -20,39 +21,28 @@ const officeHours = {
   ]
 };
 
+const getActualDate = () =>
+  moment()
+    .utc()
+    .format();
+
+const isAvailableDay = (day, workingDays) => workingDays.includes(day);
+
+const isAvailableHour = (starHour, endHour, validWorkingHours) =>
+  starHour >= validWorkingHours.from && endHour <= validWorkingHours.to;
+
 const onlyInOfficeHours = (start, end, timezone = "America/Mexico_City") => {
   const startDate = moment(start).tz(timezone);
   const endDate = moment(end).tz(timezone);
 
-  // Check if is weekday
-  const isAvailableDay = day => officeHours.workingDays.includes(day);
-
   // Check if the hours is in office hours
   const [firstWorkingHours] = officeHours.workingHours;
 
-  const isAvailableHour = (starHour, endHour) =>
-    starHour >= firstWorkingHours.from && endHour <= firstWorkingHours.to;
-
   return (
-    isAvailableDay(startDate.isoWeekday()) &&
-    isAvailableHour(startDate.format("HH:mm"), endDate.format("HH:mm"))
+    isAvailableDay(startDate.isoWeekday(), officeHours.workingDays) &&
+    isAvailableHour(startDate.format("HH:mm"), endDate.format("HH:mm"), firstWorkingHours)
   );
 };
-
-const cannotOverlap = roomName => ({
-  status: 422,
-  message: `There is already an appointment on ${roomName}`
-});
-
-const cannotScheduleForYesterday = () => ({
-  status: 422,
-  message: "Cannot schedule room in the past"
-});
-
-const cannotScheduleOutsideOfficeHours = () => ({
-  status: 422,
-  message: `Cannot schedule outside office hours from ${officeHours.workingHours[0].from}-${officeHours.workingHours[0].to}`
-});
 
 const bookingBeforeSaveOperationHook = (ctx, next) => {
   try {
@@ -63,77 +53,58 @@ const bookingBeforeSaveOperationHook = (ctx, next) => {
     const { accessToken: token } = ctx.options;
 
     if (start.toString() === end.toString()) {
-      return next(cannotOverlap());
+      return next(errorFactory.cannotOverlap());
     }
 
     if (getActualDate() > start) {
-      return next(cannotScheduleForYesterday());
+      return next(errorFactory.cannotScheduleForYesterday());
     }
 
     if (!onlyInOfficeHours(start, end)) {
-      return next(cannotScheduleOutsideOfficeHours());
+      return next(errorFactory.cannotScheduleOutsideOfficeHours());
     }
 
-    Booking.find(
-      {
-        where: {
-          room_id,
-          or: [
-            {
-              end: {
-                between: [start, end]
-              }
-            },
-            {
-              start: {
-                between: [start, end]
-              }
-            }
-          ]
-        },
-        include: "room"
-      },
-      async (err, booking) => {
-        const { email: ownerEmail } = await user.findById(token.userId);
-        const { name: location } = await Room.findById(room_id);
-        let bookingErr = err;
-        const [firstBooking] = booking;
-        if (firstBooking && ctx.isNewInstance && booking.length === 1) {
-          bookingErr = cannotOverlap(firstBooking.room.name);
-        } else if (firstBooking && !ctx.isNewInstance) {
-          // The owner is the
-          if (firstBooking.id === instance.id) {
-            const { event_id } = await Booking.findById(instance.id);
-            const eventUpdated = await calendarService.updateEvent(
-              event_id,
-              start,
-              end,
-              description,
-              [...attendees, ownerEmail],
-              location
-            );
+    Booking.find(isAlreadyBooked(room_id, start, end), async (err, booking) => {
+      const { email: ownerEmail } = await user.findById(token.userId);
+      const { name: location } = await Room.findById(room_id);
+      let bookingErr = err;
+      const [firstBooking] = booking;
+      if (firstBooking && ctx.isNewInstance && booking.length === 1) {
+        bookingErr = errorFactory.cannotOverlap(firstBooking.room.name);
+      } else if (firstBooking && !ctx.isNewInstance) {
+        // The owner is the
+        if (firstBooking.id === instance.id) {
+          const { event_id } = await Booking.findById(instance.id);
+          const eventUpdated = await calendarService.updateEvent(
+            event_id,
+            start,
+            end,
+            description,
+            [...attendees, ownerEmail],
+            location
+          );
 
-            return next();
-          }
+          return next();
         }
-
-        if (!bookingErr) {
-          if (ctx.isNewInstance) {
-            const { id: event_id } = await calendarService.insertEvent(
-              start,
-              end,
-              description,
-              [...attendees, ownerEmail],
-              location
-            );
-            ctx.instance.event_id = event_id;
-          }
-        }
-        next(bookingErr);
       }
-    );
+
+      if (!bookingErr) {
+        if (ctx.isNewInstance) {
+          const { id: event_id } = await calendarService.insertEvent(
+            start,
+            end,
+            description,
+            [...attendees, ownerEmail],
+            location
+          );
+          ctx.instance.event_id = event_id;
+        }
+      }
+      next(bookingErr);
+    });
   } catch (error) {
     log.error(`Error in bookingBeforeSaveOperationHook.js`, error);
   }
 };
+
 module.exports = { bookingBeforeSaveOperationHook };
