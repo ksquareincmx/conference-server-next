@@ -1,15 +1,15 @@
 /**
  * Admin User
- * michell.ayala@ksquareinc.com
  */
+const { app } = require("../config/config");
 
 module.exports = App => {
   const { user } = App.models;
   user.create(
     {
-      name: "Michell Ayala",
-      email: "michell.ayala@ksquareinc.com",
-      password: "KsquareConference2019",
+      name: app.admin.name,
+      email: app.admin.email,
+      password: app.admin.password,
       role: "admin"
     },
     (err, user) => {
