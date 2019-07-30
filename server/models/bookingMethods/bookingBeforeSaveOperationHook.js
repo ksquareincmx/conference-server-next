@@ -1,12 +1,12 @@
 const moment = require("moment-timezone");
 const { calendarService } = require("../../services/calendarService");
 const { log } = require("../../libraries/log");
-const { queryBuilder } = require("../../queries");
+const { errorFactory } = require("../../factories/ErrorFactory");
 const {
-  errorFactory: {
+  queryBuilder: {
     booking: { isAlreadyBooked }
   }
-} = require("../../factories/ErrorFactory");
+} = require("../../libraries/queryBuilder");
 
 // TODO: have a some sort of config file for setting custom office preferences
 const officeHours = {
@@ -40,11 +40,7 @@ const onlyInOfficeHours = (start, end, timezone = "America/Mexico_City") => {
 
   return (
     isAvailableDay(startDate.isoWeekday(), officeHours.workingDays) &&
-    isAvailableHour(
-      startDate.format("HH:mm"),
-      endDate.format("HH:mm"),
-      firstWorkingHours
-    )
+    isAvailableHour(startDate.format("HH:mm"), endDate.format("HH:mm"), firstWorkingHours)
   );
 };
 
