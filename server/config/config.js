@@ -1,4 +1,11 @@
 module.exports = {
+  app: {
+    admin: {
+      name: process.env.APP_ADMIN_NAME,
+      email: process.env.APP_ADMIN_EMAIL,
+      password: process.env.APP_ADMIN_PASSWORD
+    }
+  },
   config: {
     email: {
       from_address:
