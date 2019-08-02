@@ -1,15 +1,15 @@
 const {
   bookingAfterFindRemoteHook
-} = require("./bookingMethods/bookingAfterFindRemoteHook");
+} = require("../controllers/booking/bookingAfterFindRemoteHook");
 const {
   bookingBeforeSaveOperationHook
-} = require("./bookingMethods/bookingBeforeSaveOperationHook");
+} = require("../controllers/booking/bookingBeforeSaveOperationHook");
 const {
   bookingAfterDeleteOperationHook
-} = require("./bookingMethods/bookingAfterDeleteOperationHook");
+} = require("../controllers/booking/bookingAfterDeleteOperationHook");
 const {
   bookingBeforeDeleteOperationHook
-} = require("./bookingMethods/bookingBeforeDeleteOperationHook");
+} = require("../controllers/booking/bookingBeforeDeleteOperationHook");
 
 module.exports = function(Booking) {
   Booking.observe("before save", bookingBeforeSaveOperationHook);

@@ -1,23 +1,23 @@
+const { env } = process;
 module.exports = {
   app: {
     admin: {
-      name: process.env.APP_ADMIN_NAME,
-      email: process.env.APP_ADMIN_EMAIL,
-      password: process.env.APP_ADMIN_PASSWORD
+      name: env.APP_ADMIN_NAME,
+      email: env.APP_ADMIN_EMAIL,
+      password: env.APP_ADMIN_PASSWORD
     }
   },
   config: {
     email: {
-      from_address:
-        process.env.EMAIL_FROM_ADDRESS || "MyApp <no-reply@example.com>",
+      from_address: env.EMAIL_FROM_ADDRESS || "MyApp <no-reply@example.com>",
       auth: {
-        api_key: process.env.EMAIL_API_KEY || "(your mailgun api key)",
-        domain: process.env.EMAIL_DOMAIN || "(your mailgun domain)"
+        api_key: env.EMAIL_API_KEY || "(your mailgun api key)",
+        domain: env.EMAIL_DOMAIN || "(your mailgun domain)"
       }
     },
     auth: {
       google: {
-        clientId: process.env.GOOGLE_CLIENT_ID,
+        clientId: env.GOOGLE_CLIENT_ID,
         allowedDomains: [
           "prompto.io",
           "ksquareinc.com",
@@ -25,14 +25,20 @@ module.exports = {
           "scouting.org",
           "gmail.com"
         ]
+      },
+      slack: {
+        accessToken: env.SLACK_ACCESS_TOKEN,
+        signingSecret: env.SLACK_SIGNING_SECRET,
+        apiUri: env.SLACK_API_URI,
+        callbackUrl: env.SLACK_CALLBACK_URL
       }
     },
     serviceAccount: {
       key:
-        process.env.KEY_SERVICE_ACCOUNT.replace(/\\n/g, "\n") ||
+        env.KEY_SERVICE_ACCOUNT.replace(/\\n/g, "\n") ||
         "The key must be in file .env",
-      serviceAcctId: process.env.SERVICE_ACCOUNT,
-      timezone: process.env.TIMEZONE || "UTC-05:00"
+      serviceAcctId: env.SERVICE_ACCOUNT,
+      timezone: env.TIMEZONE || "UTC-05:00"
     }
   }
 };

@@ -1,10 +1,10 @@
 
+# START THE PGSQL SERVER
 FROM postgres
 WORKDIR /var/db
 COPY ./db ./
-# RUN THE PGSQL SERVER
 
-# My SQL
+# START conference-server
 FROM node:alpine
 WORKDIR /var/www/
 COPY yarn.lock package.json ./

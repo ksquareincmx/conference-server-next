@@ -10,7 +10,7 @@
     "start": "cross-env NODE_ENV=development nodemon .",
     "production": "cross-env NODE_ENV=production node .",
     "posttest": "yarn lint && yarn audit",
-    "format": "prettier --write server/**/**/*.js",
+    "format": "prettier --write 'server/**/*.js'",
     "test:watch": "jest --watch"
   },
   "dependencies": {
@@ -24,9 +24,11 @@
     "loopback-component-explorer": "^6.2.0",
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.26",
+    "node-fetch": "^2.6.0",
     "node-google-calendar": "^1.1.1",
     "serve-favicon": "^2.0.1",
     "strong-error-handler": "^3.0.0",
+    "tsscmp": "^1.0.6",
     "winston": "^3.2.1"
   },
   "devDependencies": {

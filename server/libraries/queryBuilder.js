@@ -1,7 +1,7 @@
 module.exports = {
   queryBuilder: {
     booking: {
-      isAlreadyBooked: (roomId, start, end) => ({
+      isAlreadyBooked: (room_id, start, end) => ({
         where: {
           room_id,
           or: [
