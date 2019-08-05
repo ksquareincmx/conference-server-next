@@ -10,15 +10,17 @@ async function getAvailableBookingsByRoom(roomId, date) {
 
   try {
     if (!isEmpty(date) && !isValidDate(date)) {
-      return Promise.reject(
-        new Error("Date must be a date in format YYYY-MM-DD")
-      );
+      return Promise.reject(new Error("Date must be a date in format YYYY-MM-DD"));
     }
     const currentRoom = await Room.findById(roomId);
     if (!currentRoom) {
       return Promise.reject(new Error(`Room ${roomId} doesn't exist`));
     }
 
+    if (!date.isAMomentObject) {
+      console.log(date);
+      date = moment(date);
+    }
     // We get al the bookings in that array of hours
     const isToday = () => moment().format("YYYY-MM-DD") === date;
     const dateTimestamp = moment(date).valueOf();
@@ -31,10 +33,7 @@ async function getAvailableBookingsByRoom(roomId, date) {
     const roomBookings = await currentRoom.bookings.find({
       where: {
         start: {
-          between: [
-            `${date}T${workingHours[0].from}:00`,
-            `${date}T${workingHours[0].to}:00`
-          ]
+          between: [`${date}T${workingHours[0].from}:00`, `${date}T${workingHours[0].to}:00`]
         }
       }
     });
@@ -47,9 +46,7 @@ async function getAvailableBookingsByRoom(roomId, date) {
         .format()
         .slice(11, 16);
 
-    const freshBookings = roomBookings.filter(
-      ({ start }) => moment.now() < dateTimestamp
-    );
+    const freshBookings = roomBookings.filter(({ start }) => moment.now() < dateTimestamp);
 
     const existingBookings = freshBookings.map(({ start, end }) => ({
       start: formatTime(start),
@@ -88,8 +85,11 @@ async function getAvailableBookingsByRoom(roomId, date) {
       return booking;
     });
     const availableBookings = rawAvailableBookings.filter(booking => !!booking);
+    console.log({ availableBookings });
     return availableBookings;
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 const getAvailableBookingsByRoomDescription = {
@@ -107,8 +107,7 @@ const getAvailableBookingsByRoomDescription = {
   ],
   returns: {
     arg: "bookings",
-    type: "array",
-    root: true
+    type: "array"
   }
 };
 
