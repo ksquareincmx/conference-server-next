@@ -16,4 +16,13 @@ module.exports = function(Booking) {
   Booking.observe("after delete", bookingAfterDeleteOperationHook);
   Booking.observe("before delete", bookingBeforeDeleteOperationHook);
   Booking.afterRemote("find.**", bookingAfterFindRemoteHook);
+
+  Booking.command = async function (payload) {
+
+  };
+
+  Booking.remoteMethod('command', {
+
+  });
+
 };

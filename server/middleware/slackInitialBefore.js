@@ -1,17 +1,28 @@
 const { Router } = require("express");
 const { isEmpty, getActualDate, isWeekendDay } = require("../utils");
 const { log } = require("../libraries/log");
-const { restApiRoot } = require("../config.local");
-const {
-  config: { auth }
-} = require("../config/config");
-const { slackService } = require("../services/slackService");
+const { auth: { slack: { appPath: slackPath } } } = require("../config.local");
+const { slackService } = require("../services/slackService/slackService");
+const fetch = require('node-fetch');
+const slackInitialBefore = Router();
+const bodyParser = require('body-parser');
+const { URLSearchParams } = require('url');
+const uuidv4 = require("uuid/v4");
 
-const slackRouter = Router();
-const slackURL = `${restApiRoot}/slack/`;
+slackInitialBefore.use(bodyParser.urlencoded({ extended: false }));
 
 // Middleware for validating each request
-slackRouter.use((req, res, next) => {
+slackInitialBefore.use((req, res, next) => {
+
+  const { url } = req;
+
+  // Oauth request dont need to be validated
+  if (url.indexOf('/oauth20') === 0) {
+    next();
+    return;
+
+  }
+
   const { response_url } = req.body;
   if (slackService.validateSignature(req)) {
     slackService.sendMessage({
@@ -19,14 +30,14 @@ slackRouter.use((req, res, next) => {
       type: "error",
       text: "Request is not signed correctly"
     });
-    res.sendStatus(200); // Slack needs always a 200
+    res.status(200).send("Waiting for confirmation"); // Slack needs always a 200
   } else {
-    res.sendStatus(200); // Every request should have a 200
+    res.status(200).send("Waiting for confirmation"); // Every request should have a 200
     next();
   }
 });
 
-slackRouter.post("/command", async (req, res) => {
+slackInitialBefore.post("/command", async (req, res) => {
   const { Booking } = req.app.models;
 
   const { response_url } = req.body;
@@ -80,7 +91,7 @@ slackRouter.post("/command", async (req, res) => {
   }
 });
 
-slackRouter.post("/interaction", async (req, res) => {
+slackInitialBefore.post("/interaction", async (req, res) => {
   const payload = JSON.parse(req.body.payload);
   const { type } = payload;
   const { Room } = req.app.models;
@@ -129,6 +140,11 @@ slackRouter.post("/interaction", async (req, res) => {
   }
 });
 
-module.exports = {
-  slackRouter
-};
+slackInitialBefore.get("/oauth20", async (req, res) => {
+
+
+
+
+});
+
+module.exports = () => slackInitialBefore;

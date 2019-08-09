@@ -27,10 +27,13 @@ module.exports = {
         ]
       },
       slack: {
+        clientId: env.SLACK_CLIENT_ID,
+        clientSecret: env.SLACK_CLIENT_SECRET,
         accessToken: env.SLACK_ACCESS_TOKEN,
         signingSecret: env.SLACK_SIGNING_SECRET,
         apiUri: env.SLACK_API_URI,
-        callbackUrl: env.SLACK_CALLBACK_URL
+        oauthUri: env.SLACK_OAUTH_URI,
+        redirectUri: env.SLACK_OAUTH_REDIRECT_URI
       }
     },
     serviceAccount: {

@@ -8,7 +8,6 @@ const loopback = require("loopback");
 const boot = require("loopback-boot");
 const path = require("path");
 const { googleAuthRouter } = require("./routers/googleAuthRouter");
-const { slackRouter } = require("./routers/slackRouter");
 const {
   config: {
     auth: { slack }
@@ -23,7 +22,6 @@ app.start = function() {
   // start the web server
   return app.listen(function() {
     app.use(googleAuthRouter);
-    app.use(`/${restApiRoot}/slack/${slack.callbackUrl}`, slackRouter);
     app.emit("started");
     const baseUrl = app.get("url").replace(/\/$/, "");
     console.log("Web server listening at: %s", baseUrl);

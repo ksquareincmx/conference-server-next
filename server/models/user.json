@@ -1,6 +1,6 @@
 {
   "name": "user",
-  "base": "User",
+  "base": "PersistedModel",
   "idInjection": true,
   "options": {
     "validateUpsert": true
@@ -21,8 +21,12 @@
     },
     "profile": {
       "type": "string"
+    },
+    "slackAccessToken": {
+      "type": "string"
     }
   },
+  "hidden": ["slackAccessToken"],
   "validations": [],
   "relations": {
     "bookings": {

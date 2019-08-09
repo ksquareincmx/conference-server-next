@@ -9,7 +9,6 @@ module.exports = App => {
     {
       name: app.admin.name,
       email: app.admin.email,
-      password: app.admin.password,
       role: "admin"
     },
     (err, user) => {

@@ -14,11 +14,13 @@
     "test:watch": "jest --watch"
   },
   "dependencies": {
+    "body-parser": "^1.19.0",
     "compression": "^1.0.3",
     "cors": "^2.5.2",
     "dotenv": "^8.0.0",
     "google-auth-library": "^4.2.5",
     "helmet": "^3.10.0",
+    "jsonwebtoken": "^8.5.1",
     "loopback": "^3.22.0",
     "loopback-boot": "^2.6.5",
     "loopback-component-explorer": "^6.2.0",
