@@ -74,6 +74,13 @@
       "principalType": "ROLE",
       "principalId": "$authenticated",
       "permission": "ALLOW"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "slack",
+      "property": "slackCommand",
+      "permission": "ALLOW"
     }
   ],
   "methods": {}

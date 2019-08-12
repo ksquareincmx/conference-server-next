@@ -49,10 +49,11 @@ class SlackService {
     const fiveMinutesAgo = ~~(Date.now() / 1000) - 60 * 5;
     if (timestamp < fiveMinutesAgo) return false;
 
-    hmac.update(`${version}:${timestamp}:${req.rawBody}`);
+    hmac.update(`${version}:${timestamp}:${req.body.toString()}`);
 
     // check that the request signature matches expected value
     return timingSafeCompare(hmac.digest("hex"), hash);
+
   }
 
   async sendDialogSubmitResponse(toURL, responseContent) {

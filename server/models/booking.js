@@ -17,12 +17,37 @@ module.exports = function(Booking) {
   Booking.observe("before delete", bookingBeforeDeleteOperationHook);
   Booking.afterRemote("find.**", bookingAfterFindRemoteHook);
 
-  Booking.command = async function (payload) {
+  Booking.slackCommand = async function (req, res) {
+
+    res.send('Waiting for server');
+
+    console.log(req);
 
   };
 
-  Booking.remoteMethod('command', {
-
+  Booking.remoteMethod('slackCommand', {
+    http: {
+      verb: 'POST',
+      path: '/slack/command'
+    },
+    accepts: [
+      {
+        arg: 'req',
+        type: 'object',
+        root: true,
+        http: {
+          source: 'req'
+        }
+      },
+      {
+        arg: 'res',
+        type: 'object',
+        root: true,
+        http: {
+          source: 'res'
+        }
+      }
+    ]
   });
 
 };

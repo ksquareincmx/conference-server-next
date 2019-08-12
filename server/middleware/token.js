@@ -4,8 +4,13 @@ const { restApiRoot, authExcluded } = require('../config.local.js');
 const { slackService: { validateSignature } } = require('../services/slackService/slackService');
 const { isValid: verifyJwt } = require('../services/jwtService');
 
+
 module.exports = function (opts) {
 
+  /**
+   * Middleware to load the 'currentUser' into the req
+   * it also can handle slack signed requests setting 'slackAccess' flag into the req
+   */
   return async function (req, res, next) {
 
     for (let excluded of authExcluded) {
@@ -18,8 +23,9 @@ module.exports = function (opts) {
     let token = req.headers['Authorization'] || req.headers['Auth'] || req.query.access_token;
 
     if (req.headers["x-slack-signature"]
-      && req.headers["x-slack-request-timestamp"]
-      && validateSignature(req)) {
+      && req.headers["x-slack-request-timestamp"]) {
+
+      req.slackAccess = validateSignature(req);
       return next();
     } else {
 
@@ -29,21 +35,11 @@ module.exports = function (opts) {
 
         const { user: User } = req.app.models;
 
-        const currentUser = await User.findById(id);
+        req.currentUser = await User.findById(id);
 
-        if (currentUser) {
-          req.currentUser = currentUser;
-          next();
-        } else {
-          const e = new Error('Unauthorized');
-          e.statusCode = 401;
-          next(e);
-        }
+        next();
 
       } catch (e) {
-        console.error(e);
-        e = new Error('Unauthorized');
-        e.statusCode = 401;
         next(e);
       }
 

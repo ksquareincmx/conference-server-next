@@ -28,11 +28,16 @@
     "helmet#noSniff": {},
     "helmet#noCache": {
       "enabled": false
+    },
+    "body-parser#raw": {
+      "params": {
+        "type": "*/*"
+      }
     }
   },
   "session": {},
   "auth": {
-    "./middleware/auth": {}
+  "./middleware/token": {}
   },
   "parse": {
     "body-parser#json": {}
