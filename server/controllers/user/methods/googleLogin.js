@@ -46,7 +46,7 @@ function googleLogin(User) {
       return next(unauthorized("Unauthorized domain"));
     }
 
-    let conferenceUser = await User.findOrCreate({
+    let [conferenceUser, wasCreated] = await User.findOrCreate({
       where: {email}
     }, {
       email,
@@ -59,14 +59,20 @@ function googleLogin(User) {
     if (conferenceUser.picture !== picture) {
 
       conferenceUser.picture = picture;
-      await conferenceUser.save();
+
+      try {
+        conferenceUser = await conferenceUser.save();
+      } catch (e) {
+        console.error(e);
+      }
 
     }
 
     // Create jwt and send it to the client
+    const token = await make(conferenceUser);
 
     return {
-      token: await make(conferenceUser),
+      token,
       user: conferenceUser
     };
 
@@ -82,9 +88,16 @@ googleLogin.config = {
   accepts: [
     {
       arg: "idToken",
+      require: true,
       type: "string"
     }
-  ]
+  ],
+  returns: {
+    arg: 'data',
+    type: 'object',
+    root: true
+  }
+
 };
 
 module.exports = googleLogin;
