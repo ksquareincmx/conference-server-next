@@ -1,0 +1,90 @@
+'use strict';
+
+const {
+  OAuth2Client
+} = require("google-auth-library");
+const {isEmpty} = require("../../../utils");
+const {log} = require("../../../libraries/log");
+const {restApiRoot} = require("../../../config.local");
+const {
+  config: {auth}
+} = require("../../../config/config");
+const {errorFactory: {badRequest, unauthorized, serverError}} = require('../../../factories/ErrorFactory');
+const gAuthClient = new OAuth2Client(auth.google.clientId);
+const {make} = require('../../../services/jwtService');
+
+function googleLogin(User) {
+
+  return async function (idToken, next) {
+
+    if (isEmpty(idToken)) {
+      return next(badRequest());
+    }
+
+    let ticket;
+    try {
+
+      ticket = await gAuthClient.verifyIdToken({
+        idToken,
+        audience: auth.google.clientId
+      });
+    } catch (e) {
+      console.error(e);
+      return serverError();
+    }
+
+    const payload = ticket.getPayload();
+    const userId = payload["sub"];
+    const domain = payload["hd"] || payload["email"].split("@")[1];
+    const email = payload["email"];
+    const name = payload["name"];
+    const picture = payload["picture"];
+
+    const isValidDomain = domain => auth.google.allowedDomains.includes(domain);
+
+    if (!isValidDomain(domain) || isEmpty(domain)) {
+      return next(unauthorized("Unauthorized domain"));
+    }
+
+    let conferenceUser = await User.findOrCreate({
+      where: {email}
+    }, {
+      email,
+      name,
+      picture,
+      googleId: userId
+    });
+
+    // If the user was previously made and has no picture, update picture
+    if (conferenceUser.picture !== picture) {
+
+      conferenceUser.picture = picture;
+      await conferenceUser.save();
+
+    }
+
+    // Create jwt and send it to the client
+
+    return {
+      token: await make(conferenceUser),
+      user: conferenceUser
+    };
+
+  };
+
+}
+
+googleLogin.config = {
+  http: {
+    verb: "POST",
+    path: "/google/oauth20"
+  },
+  accepts: [
+    {
+      arg: "idToken",
+      type: "string"
+    }
+  ]
+};
+
+module.exports = googleLogin;

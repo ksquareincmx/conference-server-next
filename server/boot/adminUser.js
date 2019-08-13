@@ -2,6 +2,7 @@
  * Admin User
  */
 const { app } = require("../config/config");
+const { make } = require('../services/jwtService');
 
 module.exports = App => {
   const { user } = App.models;
@@ -10,11 +11,13 @@ module.exports = App => {
       name: app.admin.name,
       email: app.admin.email,
       role: "admin"
-    },
-    (err, user) => {
+    }, async (err, user) => {
       if (err) {
         throw new Error(`Cannot create admin`, err);
       }
+
+      console.log('Admin token: ', `"${await make(user)}"`);
+
     }
   );
 };

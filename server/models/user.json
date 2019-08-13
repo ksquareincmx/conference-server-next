@@ -22,11 +22,14 @@
     "profile": {
       "type": "string"
     },
-    "slackAccessToken": {
+    "slackId": {
+      "type": "string"
+    },
+    "googleId": {
       "type": "string"
     }
   },
-  "hidden": ["slackAccessToken"],
+  "hidden": ["slackAccessToken", "googleIdToken"],
   "validations": [],
   "relations": {
     "bookings": {
@@ -47,6 +50,20 @@
       "principalType": "ROLE",
       "principalId": "$everyone",
       "permission": "DENY"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "property": "slackLogin",
+      "permission": "ALLOW"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "property": "googleLogin",
+      "permission": "ALLOW"
     }
   ],
   "methods": {}

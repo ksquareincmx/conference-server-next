@@ -14,7 +14,27 @@ const errorFactory = {
   wrongStartTime: () => ({
     status: 422,
     message: "Wrong start and end time"
-  })
+  }),
+  badRequest: (message = 'Bad request') => {
+    const e = new Error(message);
+    e.statusCode = 400;
+    return e;
+  },
+  unauthorized: (message = 'Unauthorized') => {
+    const e = new Error(message);
+    e.statusCode = 401;
+    return e;
+  },
+  forbidden: (message = 'Forbidden') => {
+    const e = new Error(message);
+    e.statusCode = 401;
+    return e;
+  },
+  serverError: (message = 'Internal server error') => {
+    const e = new Error(message);
+    e.statusCode = 401;
+    return e;
+  }
 };
 
 module.exports = { errorFactory };

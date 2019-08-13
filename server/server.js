@@ -21,7 +21,7 @@ app.officeConfig = officeConfig; // Set custom officeConfig object to whole app 
 app.start = function() {
   // start the web server
   return app.listen(function() {
-    app.use(googleAuthRouter);
+    /*app.use(googleAuthRouter);*/
     app.emit("started");
     const baseUrl = app.get("url").replace(/\/$/, "");
     console.log("Web server listening at: %s", baseUrl);

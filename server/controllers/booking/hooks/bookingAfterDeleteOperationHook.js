@@ -1,5 +1,6 @@
-const { calendarService } = require("../../services/calendarService");
-const { log } = require("../../libraries/log");
+'use strict';
+const { calendarService } = require("../../../services/calendarService");
+const { log } = require("../../../libraries/log");
 
 const bookingAfterDeleteOperationHook = async (ctx, next) => {
   const {
@@ -17,4 +18,4 @@ const bookingAfterDeleteOperationHook = async (ctx, next) => {
   }
 };
 
-module.exports = { bookingAfterDeleteOperationHook };
+module.exports = bookingAfterDeleteOperationHook;

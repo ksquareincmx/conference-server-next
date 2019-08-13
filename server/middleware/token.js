@@ -13,13 +13,6 @@ module.exports = function (opts) {
    */
   return async function (req, res, next) {
 
-    for (let excluded of authExcluded) {
-      excluded = excluded.trim();
-      if (req._parsedUrl.pathname === `${restApiRoot}${excluded}` || req._parsedUrl.pathname.indexOf(excluded) === 0) {
-        return next();
-      }
-    }
-
     let token = req.headers['Authorization'] || req.headers['Auth'] || req.query.access_token;
 
     if (req.headers["x-slack-signature"]
@@ -27,22 +20,18 @@ module.exports = function (opts) {
 
       req.slackAccess = validateSignature(req);
       return next();
+    } else if(token) {
+
+      const { id } = await verifyJwt(token);
+
+      const { user: User } = req.app.models;
+
+      req.currentUser = await User.findById(id);
+
+      next();
+
     } else {
-
-      try {
-
-        const { id } = await verifyJwt(token);
-
-        const { user: User } = req.app.models;
-
-        req.currentUser = await User.findById(id);
-
-        next();
-
-      } catch (e) {
-        next(e);
-      }
-
+      next();
     }
 
   };

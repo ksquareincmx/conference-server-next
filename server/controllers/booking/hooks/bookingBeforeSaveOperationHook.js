@@ -1,13 +1,13 @@
 const moment = require("moment-timezone");
-const { calendarService } = require("../../services/calendarService");
-const { log } = require("../../libraries/log");
-const { errorFactory } = require("../../factories/ErrorFactory");
+const { calendarService } = require("../../../services/calendarService");
+const { log } = require("../../../libraries/log");
+const { errorFactory } = require("../../../factories/ErrorFactory");
 const {
   queryBuilder: {
     booking: { isAlreadyBooked }
   }
-} = require("../../libraries/queryBuilder");
-const { getActualDate } = require("../../utils");
+} = require("../../../libraries/queryBuilder");
+const { getActualDate } = require("../../../utils");
 
 const isAvailableDay = (day, workingDays) => workingDays.includes(day);
 
@@ -20,7 +20,7 @@ const isAvailableHour = (starHour, endHour, validWorkingHours) =>
     {
       from: "09:00",
       to: "14:00"
-    }, 
+    },
     {
       from: "15:00",
       to: "19:00"
@@ -117,4 +117,4 @@ const bookingBeforeSaveOperationHook = (ctx, next) => {
   }
 };
 
-module.exports = { bookingBeforeSaveOperationHook };
+module.exports = bookingBeforeSaveOperationHook;

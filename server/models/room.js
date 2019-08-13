@@ -1,19 +1,12 @@
 const {
-  getAvailableBookingsByRoom,
-  getAvailableBookingsByRoomDescription
-} = require("../controllers/room/getAvailableBookingsByRoom");
+  getAvailableBookingsByRoom
+} = require("../controllers/room/methods");
 
 module.exports = function(Room) {
+
   Room.validatesUniquenessOf("name", { message: "email is not unique" });
 
-  const bindedGetAvailableBookingsByRoom = getAvailableBookingsByRoom.bind(
-    Room
-  );
+  Room.getAvailableBookingsByRoom = getAvailableBookingsByRoom(Room);
+  Room.remoteMethod(getAvailableBookingsByRoom.name, getAvailableBookingsByRoom.config);
 
-  const { name: availableBookings } = getAvailableBookingsByRoomDescription;
-
-  Room.getAvailableBookingsByRoom = bindedGetAvailableBookingsByRoom;
-
-  Room[availableBookings] = bindedGetAvailableBookingsByRoom;
-  Room.remoteMethod(availableBookings, getAvailableBookingsByRoomDescription);
 };
