@@ -1,4 +1,20 @@
-conference-server-next
+# conference-server-next
+
+Manage conference-rooms for your workplace
+
+## Customize with your workspace time!
+
+the `office-config.js` is where your company custom requirements lives, some of the things you can configure there, are.
+
+| Property   | Default                            | Description                                                                                         |
+| ---------- | ---------------------------------- | --------------------------------------------------------------------------------------------------- |
+| `timezone` | `America/Mexico_City`              | Set your current office timezone (unfortanetly only one timezone is supported for the whole server) |
+| `days`     | `[1,2,3,4,5]`                      | An array of numbers with the working days, written in ISOFormat                                     |
+| `hours`    | `[{ from: "08:00", to: "18:00" }]` | An array of objects with the working hours                                                          |
+
+**Where do I get that config information**
+
+If for some reason you want to access the `officeConfig` (the object where all this data is stored) it belongs to the `app` object, since this app is build with `loopback` it has some cool `express` features aswell, which let's us access the `app` object so whenever you want
 
 ## About the Google Auth Endpoint
 

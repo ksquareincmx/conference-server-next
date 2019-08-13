@@ -1,9 +1,16 @@
 {
   "plugins": ["prettier"],
   "rules": {
-    "prettier/prettier": "error"
+    "prettier/prettier": "error",
+    "no-undef": "warn"
   },
   "parserOptions": {
     "ecmaVersion": 8
+  },
+  "env": {
+    "node": true
+  },
+  "globals": {
+    "Promise": true
   }
 }

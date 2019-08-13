@@ -1,4 +1,5 @@
-const { log } = require("../../libraries/log");
+'use strict';
+const { log } = require("../../../libraries/log");
 
 const bookingBeforeDeleteOperationHook = async (ctx, next) => {
   const { Model: Booking } = ctx;
@@ -18,4 +19,4 @@ const bookingBeforeDeleteOperationHook = async (ctx, next) => {
   }
 };
 
-module.exports = { bookingBeforeDeleteOperationHook };
+module.exports = bookingBeforeDeleteOperationHook;

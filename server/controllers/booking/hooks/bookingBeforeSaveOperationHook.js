@@ -1,45 +1,44 @@
 const moment = require("moment-timezone");
-const { calendarService } = require("../../services/calendarService");
-const { log } = require("../../libraries/log");
-const { queryBuilder } = require("../../queries");
+const { calendarService } = require("../../../services/calendarService");
+const { log } = require("../../../libraries/log");
+const { errorFactory } = require("../../../factories/ErrorFactory");
 const {
-  errorFactory: {
+  queryBuilder: {
     booking: { isAlreadyBooked }
   }
-} = require("../../factories/ErrorFactory");
-
-// TODO: have a some sort of config file for setting custom office preferences
-const officeHours = {
-  timezone: "America/Mexico_City",
-  // Ideally we would write this like, { from: "monday": to: "friday" };
-  workingDays: [1, 2, 3, 4, 5],
-  workingHours: [
-    {
-      from: "08:00",
-      to: "18:00"
-    }
-  ]
-};
-
-const getActualDate = () =>
-  moment()
-    .utc()
-    .format();
+} = require("../../../libraries/queryBuilder");
+const { getActualDate } = require("../../../utils");
 
 const isAvailableDay = (day, workingDays) => workingDays.includes(day);
 
 const isAvailableHour = (starHour, endHour, validWorkingHours) =>
   starHour >= validWorkingHours.from && endHour <= validWorkingHours.to;
 
-const onlyInOfficeHours = (start, end, timezone = "America/Mexico_City") => {
+/**
+  TODO: improve this function to support multiple workingHours
+  workingHours = [
+    {
+      from: "09:00",
+      to: "14:00"
+    },
+    {
+      from: "15:00",
+      to: "19:00"
+    }
+  ]
+  cannot schedule from 14:01 to 14:59
+*/
+const withinOfficeHours = (start, end, officeConfig) => {
+  const { timezone, workingHours, workingDays } = officeConfig;
+
   const startDate = moment(start).tz(timezone);
   const endDate = moment(end).tz(timezone);
 
   // Check if the hours is in office hours
-  const [firstWorkingHours] = officeHours.workingHours;
+  const [firstWorkingHours] = workingHours;
 
   return (
-    isAvailableDay(startDate.isoWeekday(), officeHours.workingDays) &&
+    isAvailableDay(startDate.isoWeekday(), workingDays) &&
     isAvailableHour(
       startDate.format("HH:mm"),
       endDate.format("HH:mm"),
@@ -52,24 +51,29 @@ const bookingBeforeSaveOperationHook = (ctx, next) => {
   try {
     const { Model: Booking } = ctx;
     const { Room, user } = ctx.Model.app.models;
+    const { officeConfig } = ctx.Model.app;
     const { instance } = ctx;
     const { start, end, room_id, attendees, description } = instance;
     const { accessToken: token } = ctx.options;
-
     if (start.toString() === end.toString()) {
       return next(errorFactory.cannotOverlap());
+    }
+
+    if (start > end) {
+      return next(errorFactory.wrongStartTime());
     }
 
     if (getActualDate() > start) {
       return next(errorFactory.cannotScheduleForYesterday());
     }
 
-    if (!onlyInOfficeHours(start, end)) {
-      return next(errorFactory.cannotScheduleOutsideOfficeHours());
+    if (!withinOfficeHours(start, end, officeConfig)) {
+      return next(errorFactory.cannotScheduleOutsideOfficeHours(workingHours));
     }
 
     Booking.find(isAlreadyBooked(room_id, start, end), async (err, booking) => {
-      const { email: ownerEmail } = await user.findById(token.userId);
+      let ownerUserId = token ? token.userId : instance.user_id;
+      const { email: ownerEmail } = await user.findById(ownerUserId);
       const { name: location } = await Room.findById(room_id);
       let bookingErr = err;
       const [firstBooking] = booking;
@@ -94,14 +98,16 @@ const bookingBeforeSaveOperationHook = (ctx, next) => {
 
       if (!bookingErr) {
         if (ctx.isNewInstance) {
-          const { id: event_id } = await calendarService.insertEvent(
-            start,
-            end,
-            description,
-            [...attendees, ownerEmail],
-            location
-          );
-          ctx.instance.event_id = event_id;
+          if (instance.event_id === "" || !instance.event_id) {
+            const { id: event_id } = await calendarService.insertEvent(
+              start,
+              end,
+              description,
+              [...attendees, ownerEmail],
+              location
+            );
+            ctx.instance.event_id = event_id;
+          }
         }
       }
       next(bookingErr);
@@ -111,4 +117,4 @@ const bookingBeforeSaveOperationHook = (ctx, next) => {
   }
 };
 
-module.exports = { bookingBeforeSaveOperationHook };
+module.exports = bookingBeforeSaveOperationHook;

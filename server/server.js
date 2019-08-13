@@ -7,14 +7,21 @@ require("dotenv").config();
 const loopback = require("loopback");
 const boot = require("loopback-boot");
 const path = require("path");
-const { googleAuthRouter } = require("./googleAuthRouter");
-
+const { googleAuthRouter } = require("./routers/googleAuthRouter");
+const {
+  config: {
+    auth: { slack }
+  }
+} = require("./config/config");
 const app = (module.exports = loopback());
+const { restApiRoot } = require("./config.local");
+const officeConfig = require("../office-config");
 
+app.officeConfig = officeConfig; // Set custom officeConfig object to whole app context;
 app.start = function() {
   // start the web server
   return app.listen(function() {
-    app.use(googleAuthRouter);
+    /*app.use(googleAuthRouter);*/
     app.emit("started");
     const baseUrl = app.get("url").replace(/\/$/, "");
     console.log("Web server listening at: %s", baseUrl);

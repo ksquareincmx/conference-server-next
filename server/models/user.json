@@ -1,6 +1,6 @@
 {
   "name": "user",
-  "base": "User",
+  "base": "PersistedModel",
   "idInjection": true,
   "options": {
     "validateUpsert": true
@@ -21,8 +21,15 @@
     },
     "profile": {
       "type": "string"
+    },
+    "slackId": {
+      "type": "string"
+    },
+    "googleId": {
+      "type": "string"
     }
   },
+  "hidden": ["slackAccessToken", "googleIdToken"],
   "validations": [],
   "relations": {
     "bookings": {
@@ -43,6 +50,20 @@
       "principalType": "ROLE",
       "principalId": "$everyone",
       "permission": "DENY"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "property": "slackLogin",
+      "permission": "ALLOW"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "property": "googleLogin",
+      "permission": "ALLOW"
     }
   ],
   "methods": {}
