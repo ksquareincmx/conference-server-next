@@ -1,3 +1,5 @@
+'use strict';
+
 const errorFactory = {
   cannotOverlap: roomName => ({
     status: 422,
@@ -15,26 +17,17 @@ const errorFactory = {
     status: 422,
     message: "Wrong start and end time"
   }),
-  badRequest: (message = 'Bad request') => {
-    const e = new Error(message);
-    e.statusCode = 400;
-    return e;
-  },
-  unauthorized: (message = 'Unauthorized') => {
-    const e = new Error(message);
-    e.statusCode = 401;
-    return e;
-  },
-  forbidden: (message = 'Forbidden') => {
-    const e = new Error(message);
-    e.statusCode = 401;
-    return e;
-  },
-  serverError: (message = 'Internal server error') => {
-    const e = new Error(message);
-    e.statusCode = 401;
-    return e;
-  }
+  badRequest: errorWith.bind(null, 'Bad request', 400),
+  unauthorized: errorWith.bind(null, 'Unauthorized', 401),
+  forbidden: errorWith.bind(null, 'Forbidden', 403),
+  serverError: errorWith.bind(null, 'Internal server error', 500)
 };
+
+function errorWith(message, statusCode, errorCode) {
+  const e = new Error(message);
+  e.statusCode = statusCode;
+  e.errorCode = errorCode;
+  return e;
+}
 
 module.exports = { errorFactory };

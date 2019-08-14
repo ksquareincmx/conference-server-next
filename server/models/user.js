@@ -12,6 +12,5 @@ module.exports = function(User) {
 
   User.googleLogin = googleLogin(User);
   User.remoteMethod(googleLogin.name, googleLogin.config);
-  console.log(googleLogin.name, googleLogin.config);
 
 };

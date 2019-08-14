@@ -18,7 +18,7 @@ function googleLogin(User) {
   return async function (idToken, next) {
 
     if (isEmpty(idToken)) {
-      return next(badRequest());
+      throw badRequest(5000);
     }
 
     let ticket;
@@ -28,9 +28,10 @@ function googleLogin(User) {
         idToken,
         audience: auth.google.clientId
       });
+
     } catch (e) {
       console.error(e);
-      return serverError();
+      throw serverError(5001);
     }
 
     const payload = ticket.getPayload();
@@ -43,7 +44,8 @@ function googleLogin(User) {
     const isValidDomain = domain => auth.google.allowedDomains.includes(domain);
 
     if (!isValidDomain(domain) || isEmpty(domain)) {
-      return next(unauthorized("Unauthorized domain"));
+      // Unauthorized domain
+      throw unauthorized(5002);
     }
 
     let [conferenceUser, wasCreated] = await User.findOrCreate({
