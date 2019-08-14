@@ -81,13 +81,6 @@
       "principalId": "slack",
       "property": "slackCommand",
       "permission": "ALLOW"
-    },
-    {
-      "accessType": "EXECUTE",
-      "principalType": "ROLE",
-      "principalId": "google",
-      "property": "",
-      "permission": "ALLOW"
     }
   ],
   "methods": {}

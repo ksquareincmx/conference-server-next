@@ -28,8 +28,9 @@ function overrideAuth(server) {
       ctx.req.remotingContext.options = ctx.req.remotingContext.options || {};
       ctx.req.remotingContext.options.slackAccess = slackAccess;
     } else if (currentUser) {
-      ctx.accessToken = new AccessToken({
-        userId: currentUser.id
+      ctx.req.accessToken = ctx.accessToken = new AccessToken({
+        userId: currentUser.id,
+        user: currentUser
       });
     }
 
