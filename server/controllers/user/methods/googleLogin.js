@@ -12,6 +12,7 @@ const {
 const {errorFactory: {badRequest, unauthorized, serverError}} = require('../../../factories/ErrorFactory');
 const gAuthClient = new OAuth2Client(auth.google.clientId);
 const {make} = require('../../../services/jwtService');
+const { filterByEmail } = require('../queries');
 
 function googleLogin(User) {
 
@@ -48,9 +49,7 @@ function googleLogin(User) {
       throw unauthorized(5002);
     }
 
-    let [conferenceUser, wasCreated] = await User.findOrCreate({
-      where: {email}
-    }, {
+    let [conferenceUser, wasCreated] = await User.findOrCreate(filterByEmail(email), {
       email,
       name,
       picture,

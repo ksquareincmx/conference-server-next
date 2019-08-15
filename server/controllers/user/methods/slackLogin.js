@@ -10,6 +10,7 @@ const {
   restApiRoot,
   auth: {slack: {clientId, clientSecret, redirectUri}}
 } = require('../../../config.local.js');
+const { filterByEmail } = require('../queries');
 
 function slackLogin(User) {
 
@@ -55,11 +56,7 @@ function slackLogin(User) {
             image_512: picture
           } = profile;
 
-          const [userInstance, wasCreated] = await User.findOrCreate({
-            where: {
-              email
-            }
-          }, {
+          const [userInstance, wasCreated] = await User.findOrCreate(filterByEmail(email), {
             email,
             name,
             picture,
