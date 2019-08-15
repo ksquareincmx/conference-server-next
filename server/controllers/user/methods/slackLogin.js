@@ -32,8 +32,8 @@ function slackLogin(User) {
 
       const {
         ok: responseOk,
-        authorizing_user: { user_id },
-        access_token: slackAccessToken
+        access_token: slackAccessToken,
+        user_id
       } = await exchangeResponse.json();
 
       if (responseOk) {
@@ -104,7 +104,7 @@ slackLogin.config = {
   },
   accepts: [
     {
-      arg: "idToken",
+      arg: "code",
       type: "string",
       required: true,
       http: {
