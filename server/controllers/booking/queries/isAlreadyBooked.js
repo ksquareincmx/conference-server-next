@@ -1,8 +1,8 @@
-'use strict';
+"use strict";
 
-module.exports = (room_id, start, end) => ({
+module.exports = (roomId, start, end) => ({
   where: {
-    room_id,
+    roomId,
     or: [
       {
         end: {

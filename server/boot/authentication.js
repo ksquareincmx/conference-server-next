@@ -11,17 +11,14 @@ module.exports = function enableAuthentication(server) {
 
   server.isAuthEnabled = false;
   overrideAuth(server);
-
 };
 
 function overrideAuth(server) {
-
   const { AccessToken } = server.models;
   const remotes = server.remotes();
   const oldAuth = remotes.authorization.bind(remotes);
 
   remotes.authorization = function(ctx, next) {
-
     const { slackAccess, currentUser } = ctx.req;
 
     if (slackAccess) {
@@ -34,8 +31,6 @@ function overrideAuth(server) {
       });
     }
 
-    oldAuth(ctx, next)
-
+    oldAuth(ctx, next);
   };
-
 }

@@ -1,3 +1,3 @@
-'use strict';
+"use strict";
 
-module.exports = (email) => ({where: {email}});
+module.exports = email => ({ where: { email } });
