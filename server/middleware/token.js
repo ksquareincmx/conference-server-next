@@ -14,7 +14,7 @@ module.exports = function (opts) {
   return async function (req, res, next) {
 
     let token = req.headers['authorization'] || req.headers['auth'] || req.query.access_token;
-
+    
     if (req.headers["x-slack-signature"]
       && req.headers["x-slack-request-timestamp"]) {
 
@@ -25,7 +25,13 @@ module.exports = function (opts) {
       const { id } = await verifyJwt(token);
 
       const { user: User } = req.app.models;
+      let validUser = await User.findById(id);
 
+      if (!validUser) {
+        validUser = User.create({
+
+        });
+      }
       req.currentUser = await User.findById(id);
 
       next();
@@ -33,6 +39,8 @@ module.exports = function (opts) {
     } else {
       next();
     }
+
+    console.log(token)
 
   };
 
