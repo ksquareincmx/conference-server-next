@@ -34,7 +34,7 @@ function overrideAuth(server) {
       });
     }
 
-    oldAuth(ctx, next);
+    oldAuth(ctx, next)
 
   };
 

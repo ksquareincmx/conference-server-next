@@ -13,7 +13,7 @@ module.exports = function (opts) {
    */
   return async function (req, res, next) {
 
-    let token = req.headers['Authorization'] || req.headers['Auth'] || req.query.access_token;
+    let token = req.headers['authorization'] || req.headers['auth'] || req.query.access_token;
 
     if (req.headers["x-slack-signature"]
       && req.headers["x-slack-request-timestamp"]) {
