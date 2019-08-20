@@ -2,11 +2,7 @@ const moment = require("moment-timezone");
 const { calendarService } = require("../../../services/calendarService");
 const { log } = require("../../../libraries/log");
 const { errorFactory } = require("../../../factories/ErrorFactory");
-const {
-  queryBuilder: {
-    booking: { isAlreadyBooked }
-  }
-} = require("../../../libraries/queryBuilder");
+const { isAlreadyBooked } = require("../queries");
 const { getActualDate } = require("../../../utils");
 
 const isAvailableDay = (day, workingDays) => workingDays.includes(day);

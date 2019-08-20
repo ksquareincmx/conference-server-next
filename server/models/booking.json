@@ -64,12 +64,6 @@
       "permission": "ALLOW"
     },
     {
-      "accessType": "*",
-      "principalType": "ROLE",
-      "principalId": "$everyone",
-      "permission": "DENY"
-    },
-    {
       "accessType": "READ",
       "principalType": "ROLE",
       "principalId": "$authenticated",
@@ -85,9 +79,9 @@
     {
       "accessType": "EXECUTE",
       "principalType": "ROLE",
-      "principalId": "google",
-      "property": "",
-      "permission": "ALLOW"
+      "principalId": "$everyone",
+      "property": "slackCommand",
+      "permission": "DENY"
     }
   ],
   "methods": {}
