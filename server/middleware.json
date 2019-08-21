@@ -31,9 +31,7 @@
     }
   },
   "session": {},
-  "auth": {
-  "./middleware/token": {}
-  },
+  "auth": {},
   "parse": {
     "body-parser#raw": {
       "params": {
@@ -45,6 +43,9 @@
         "type": "application/json"
       }
     }
+  },
+  "routes:before": {
+    "./middleware/token": {}
   },
   "routes": {
     "loopback#rest": {

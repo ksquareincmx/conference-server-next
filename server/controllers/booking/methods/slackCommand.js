@@ -1,6 +1,6 @@
 'use strict';
 
-async function slackCommand(Booking) {
+function slackCommand(Booking) {
 
   return async function (req, res) {
     res.send('Wait a little');

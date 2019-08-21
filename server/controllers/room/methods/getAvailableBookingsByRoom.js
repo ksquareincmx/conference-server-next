@@ -2,7 +2,7 @@ const moment = require("moment-timezone");
 const { getActualDate, isEmpty } = require("../../../utils");
 const isValidDate = date => date.toString() !== "Invalid date";
 
-async function getAvailableBookingsByRoom(Room) {
+function getAvailableBookingsByRoom(Room) {
 
   return async function (roomId, date) {
 
