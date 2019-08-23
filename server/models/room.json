@@ -22,6 +22,11 @@
     "presence": {
       "type": "boolean",
       "default": false
+    },
+    "guests": {
+      "type": "number",
+      "requied": true,
+      "default": 1
     }
   },
   "validations": [],

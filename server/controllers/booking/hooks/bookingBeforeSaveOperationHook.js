@@ -49,7 +49,7 @@ const bookingBeforeSaveOperationHook = (ctx, next) => {
     const { Room, user } = ctx.Model.app.models;
     const { officeConfig } = ctx.Model.app;
     const { instance } = ctx;
-    const { start, end, room_id, attendees, description } = instance;
+    const { start, end, room_id, attendees, description, guests } = instance;
     const { accessToken: token } = ctx.options;
     if (start.toString() === end.toString()) {
       return next(errorFactory.cannotOverlap());
@@ -70,9 +70,15 @@ const bookingBeforeSaveOperationHook = (ctx, next) => {
     Booking.find(isAlreadyBooked(room_id, start, end), async (err, booking) => {
       let ownerUserId = token ? token.userId : instance.user_id;
       const { email: ownerEmail } = await user.findById(ownerUserId);
-      const { name: location } = await Room.findById(room_id);
+      const { name: location, guests: minimumGuests } = await Room.findById(
+        room_id
+      );
       let bookingErr = err;
       const [firstBooking] = booking;
+      if (guests < minimumGuests) {
+        return next(errorFactory.notEnoughGuests());
+      }
+
       if (firstBooking && ctx.isNewInstance && booking.length === 1) {
         bookingErr = errorFactory.cannotOverlap(firstBooking.room.name);
       } else if (firstBooking && !ctx.isNewInstance) {
