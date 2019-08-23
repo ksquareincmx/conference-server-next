@@ -1,5 +1,5 @@
-'use strict';
+"use strict";
 
 module.exports = {
-  slackCommand: require('./slackCommand')
+  slackCommand: require("./slackCommand")
 };

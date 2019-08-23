@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 const errorFactory = {
   cannotOverlap: roomName => ({
@@ -17,10 +17,14 @@ const errorFactory = {
     status: 422,
     message: "Wrong start and end time"
   }),
-  badRequest: errorWith.bind(null, 'Bad request', 400),
-  unauthorized: errorWith.bind(null, 'Unauthorized', 401),
-  forbidden: errorWith.bind(null, 'Forbidden', 403),
-  serverError: errorWith.bind(null, 'Internal server error', 500)
+  notEnoughGuests: () => ({
+    status: 422,
+    message: "Not enough guests to book this room!"
+  }),
+  badRequest: errorWith.bind(null, "Bad request", 400),
+  unauthorized: errorWith.bind(null, "Unauthorized", 401),
+  forbidden: errorWith.bind(null, "Forbidden", 403),
+  serverError: errorWith.bind(null, "Internal server error", 500)
 };
 
 function errorWith(message, statusCode, errorCode) {

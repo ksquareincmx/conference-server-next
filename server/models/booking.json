@@ -28,6 +28,11 @@
     },
     "location": {
       "type": "string"
+    },
+    "guests": {
+      "type": "number",
+      "requied": true,
+      "default": 1
     }
   },
   "validations": [],
@@ -56,6 +61,12 @@
       "principalId": "$authenticated",
       "permission": "ALLOW",
       "property": "create"
+    },
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "admin",
+      "permission": "ALLOW"
     },
     {
       "accessType": "*",

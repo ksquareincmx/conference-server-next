@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 const { calendarService } = require("../../../services/calendarService");
 const { log } = require("../../../libraries/log");
 

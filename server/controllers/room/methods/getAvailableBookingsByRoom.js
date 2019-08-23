@@ -3,16 +3,16 @@ const { getActualDate, isEmpty } = require("../../../utils");
 const isValidDate = date => date.toString() !== "Invalid date";
 
 async function getAvailableBookingsByRoom(Room) {
-
-  return async function (roomId, date) {
-
+  return async function(roomId, date) {
     const {
       officeConfig: { workingHours, timezone, minDuration }
     } = this.app;
 
     try {
       if (!isEmpty(date) && !isValidDate(date)) {
-        return Promise.reject(new Error("Date must be a date in format YYYY-MM-DD"));
+        return Promise.reject(
+          new Error("Date must be a date in format YYYY-MM-DD")
+        );
       }
       const currentRoom = await Room.findById(roomId);
       if (!currentRoom) {
@@ -23,7 +23,7 @@ async function getAvailableBookingsByRoom(Room) {
         console.log(date);
         date = moment(date);
       }
-      // We get al the bookings in that array of hours
+      // We get all the bookings in that array of hours
       const isToday = () => moment().format("YYYY-MM-DD") === date;
       const dateTimestamp = moment(date).valueOf();
       const todayTimestamp = moment(date).valueOf();
@@ -35,7 +35,10 @@ async function getAvailableBookingsByRoom(Room) {
       const roomBookings = await currentRoom.bookings.find({
         where: {
           start: {
-            between: [`${date}T${workingHours[0].from}:00`, `${date}T${workingHours[0].to}:00`]
+            between: [
+              `${date}T${workingHours[0].from}:00`,
+              `${date}T${workingHours[0].to}:00`
+            ]
           }
         }
       });
@@ -48,7 +51,9 @@ async function getAvailableBookingsByRoom(Room) {
           .format()
           .slice(11, 16);
 
-      const freshBookings = roomBookings.filter(({ start }) => moment.now() < dateTimestamp);
+      const freshBookings = roomBookings.filter(
+        ({ start }) => moment.now() < dateTimestamp
+      );
 
       const existingBookings = freshBookings.map(({ start, end }) => ({
         start: formatTime(start),
@@ -86,15 +91,15 @@ async function getAvailableBookingsByRoom(Room) {
         }
         return booking;
       });
-      const availableBookings = rawAvailableBookings.filter(booking => !!booking);
+      const availableBookings = rawAvailableBookings.filter(
+        booking => !!booking
+      );
       console.log({ availableBookings });
       return availableBookings;
     } catch (error) {
       console.log(error);
     }
-
   };
-
 }
 
 getAvailableBookingsByRoom.config = {
