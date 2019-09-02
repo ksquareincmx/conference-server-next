@@ -3,16 +3,16 @@ const { getActualDate, isEmpty } = require("../../../utils");
 const isValidDate = date => date.toString() !== "Invalid date";
 
 function getAvailableBookingsByRoom(Room) {
-
-  return async function (roomId, date) {
-
+  return async function(roomId, date) {
     const {
       officeConfig: { workingHours, timezone, minDuration }
     } = this.app;
 
     try {
       if (!isEmpty(date) && !isValidDate(date)) {
-        return Promise.reject(new Error("Date must be a date in format YYYY-MM-DD"));
+        return Promise.reject(
+          new Error("Date must be a date in format YYYY-MM-DD")
+        );
       }
       const currentRoom = await Room.findById(roomId);
       if (!currentRoom) {
@@ -20,7 +20,6 @@ function getAvailableBookingsByRoom(Room) {
       }
 
       if (!date.isAMomentObject) {
-        console.log(date);
         date = moment(date);
       }
       // We get al the bookings in that array of hours
@@ -31,14 +30,19 @@ function getAvailableBookingsByRoom(Room) {
       if (dateTimestamp < todayTimestamp) {
         return Promise.reject(new Error(`Cannot schedule in the past`));
       }
+
       // Getting bookings through the relation with bookings
       const roomBookings = await currentRoom.bookings.find({
         where: {
           start: {
-            between: [`${date}T${workingHours[0].from}:00`, `${date}T${workingHours[0].to}:00`]
+            between: [
+              `${date.format("YYYY-MM-DD")}T${workingHours[0].from}:00`,
+              `${date.format("YYYY-MM-DD")}T${workingHours[0].to}:00`
+            ]
           }
         }
       });
+
       // 1: Trim the array to get all the available hours
       // Catch1: Send me the available rooms
 
@@ -48,9 +52,19 @@ function getAvailableBookingsByRoom(Room) {
           .format()
           .slice(11, 16);
 
-      const freshBookings = roomBookings.filter(({ start }) => moment.now() < dateTimestamp);
+      // const freshBookings = roomBookings.filter(
+      //   ({ start }) => moment(start).valueOf() < dateTimestamp
+      // );
 
-      const existingBookings = freshBookings.map(({ start, end }) => ({
+      const bkstr = roomBookings[0].start;
+      const actual = getActualDate();
+      // console.log(bkstr, actual);
+
+      // const freshBookings = roomBookings.filter(booking => {
+
+      // });
+
+      const existingBookings = roomBookings.map(({ start, end }) => ({
         start: formatTime(start),
         end: formatTime(end)
       }));
@@ -86,15 +100,16 @@ function getAvailableBookingsByRoom(Room) {
         }
         return booking;
       });
-      const availableBookings = rawAvailableBookings.filter(booking => !!booking);
-      console.log({ availableBookings });
+
+      const availableBookings = rawAvailableBookings.filter(
+        booking => !!booking
+      );
+
       return availableBookings;
     } catch (error) {
       console.log(error);
     }
-
   };
-
 }
 
 getAvailableBookingsByRoom.config = {

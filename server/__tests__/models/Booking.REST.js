@@ -234,4 +234,25 @@ describe("DELETE /Bookings", () => {
     expect(deleteRequest.status).toBe(401);
   });
 });
+
+describe("GET /getAvailableBookingsByRoom", () => {
+  test("shows available rooms", async () => {
+    const req = await request
+      .post(urlMaker("/Bookings"))
+      .set("Authorization", user1Token)
+      .send({
+        user_id,
+        room_id,
+        description: "Test booking",
+        start: start.valueOf(),
+        end: end.valueOf()
+      });
+
+    const getAvailableBookingsRequest = await request
+      .post(urlMaker("/Bookings/getAvailableBookingsByRoom"))
+      .set("Authorization", user1Token);
+
+    expect(getAvailableBookingsRequest.body).toBe("hola0");
+  });
+});
 // describe("DELETE /Bookings", () => {});

@@ -82,6 +82,20 @@
       "principalId": "$everyone",
       "property": "slackCommand",
       "permission": "DENY"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "slack",
+      "property": "slackInteraction",
+      "permission": "ALLOW"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "property": "slackInteraction",
+      "permission": "DENY"
     }
   ],
   "methods": {}
