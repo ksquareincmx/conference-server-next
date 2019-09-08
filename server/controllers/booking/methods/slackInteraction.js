@@ -1,5 +1,6 @@
 "use strict";
 
+const fetch = require("node-fetch");
 const moment = require("moment-timezone");
 const { areIntervalsOverlapping } = require("date-fns");
 
@@ -241,22 +242,32 @@ function slackInteraction(Booking) {
           );
         }
 
-        const dummyUser = await User.findOne({
-          attributes: ["id", "email"],
-          where: { id: process.env.SLACK_DUMMY_USER_ID }
-        });
+        // Trying to kill the fricking Masiosare
 
-        if (!dummyUser) {
-          return Promise.reject(new Error("Dummy user not exist."));
+        const payload = JSON.parse(req.body.payload);
+        const url = `https://slack.com/api/users.info?token=${process.env.SLACK_ACCESS_TOKEN}&user=${payload.user.id}`;
+        const response = await fetch(url, { method: "GET" });
+        const slackData = await response.json();
+
+        if (!slackData.user.profile) {
+          return Promise.reject(new Error("User doesn't exist."));
         }
 
-        const { id: userId, email: dummyEmail } = dummyUser.toJSON();
+        const slackUser = slackData.user.profile;
+
+        // USER IS NOT DEFINED
+        await user.create({
+          name: slackUser.real_name,
+          email: slackUser.email
+        });
+
         const attendees = bookingInfo.attendees
-          ? [...bookingInfo.attendees.split(","), dummyEmail]
-          : [dummyEmail];
+          ? [...bookingInfo.attendees.split(","), email]
+          : [email];
 
         const uniqueEmails = [...new Set(attendees)];
         const { description } = bookingInfo;
+
         const eventCalendar = await calendarService.insertEvent(
           startDate,
           endDate,
@@ -274,6 +285,15 @@ function slackInteraction(Booking) {
           start: startDate,
           end: endDate
         };
+
+        // await Booking.create({
+        //   description: "1st booking",
+        //   end: moment().add("30", "minutes"),
+        //   start: moment().add("10", "minutes"),
+        //   user_id: FirstUser.id,
+        //   room_id: rooomsArr[0].id
+        // });
+
         const bookingDao = await this.model.create({
           ...data,
           eventId: eventCalendar.id

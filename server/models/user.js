@@ -1,10 +1,9 @@
 "use strict";
 
-const { slackLogin, googleLogin } = require('../controllers/user/methods');
+const { slackLogin, googleLogin } = require("../controllers/user/methods");
 const { userBeforeSaveHook } = require("../controllers/user/hooks");
 
 module.exports = function(User) {
-
   User.observe("before save", userBeforeSaveHook);
 
   User.slackLogin = slackLogin(User);
@@ -12,5 +11,4 @@ module.exports = function(User) {
 
   User.googleLogin = googleLogin(User);
   User.remoteMethod(googleLogin.name, googleLogin.config);
-
 };
