@@ -221,14 +221,14 @@ class SlackMessageBuilder {
 
   // atendees si an array of strings
   buildAppointmentConfirmation(bookingInfo) {
+    const { slackUserName } = bookingInfo;
     const {
-      slackUserName,
-      startDate,
-      endDate,
+      start: startDate,
+      end: endDate,
       location,
       description,
       attendees
-    } = bookingInfo;
+    } = bookingInfo.__data;
 
     const formatedStartDate = moment(startDate)
       .tz("America/Mexico_city")

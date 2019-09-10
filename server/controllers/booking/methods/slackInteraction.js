@@ -273,43 +273,12 @@ function slackInteraction(Booking) {
           start: startDate,
           user_id: newUser.id,
           room_id: bookingInfo.roomId,
-          attendees: uniqueEmails
+          attendees: uniqueEmails,
+          location
         });
 
-        // const eventCalendar = await calendarService.insertEvent(
-        //   startDate,
-        //   endDate,
-        //   description,
-        //   uniqueEmails,
-        //   location
-        // );
-
-        // insert booking the DB
-        // const data = {
-        //   userId,
-        //   roomId,
-        //   description,
-        //   uniqueEmails,
-        //   start: startDate,
-        //   end: endDate
-        // };
-
-        // const bookingDao = await this.model.create({
-        //   ...data,
-        //   eventId: eventCalendar.id
-        // });
-
-        // // get the created booking with room and user details
-        // const createdBooking = await Booking.findById(bookingDao.id, {
-        //   include: [Room, User]
-        // });
-        // const parsedBooking = createdBooking.toJSON();
-
-        // // insert attendee in the DB
-        // uniqueEmails.forEach(async attendee => {
-        //   const attendeeId = await insertAttendee(attendee);
-        //   await insertBookingAttendee(parsedBooking.id, attendeeId);
-        // });
+        newBooking.location = location;
+        // newBooking.slackUserName = slackData.user.name;
 
         return newBooking;
       } catch (error) {
