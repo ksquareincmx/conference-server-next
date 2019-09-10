@@ -21,6 +21,10 @@ const errorFactory = {
     status: 422,
     message: "Not enough guests to book this room!"
   }),
+  negativeGuests: () => ({
+    status: 422,
+    message: "You need to set a possitive number"
+  }),
   badRequest: errorWith.bind(null, "Bad request", 400),
   unauthorized: errorWith.bind(null, "Unauthorized", 401),
   forbidden: errorWith.bind(null, "Forbidden", 403),

@@ -83,9 +83,11 @@ class GoogleCalendarService {
         timeZone: this.timeZone
       },
       summary: description,
-      attendees: attendees.map(attendee => ({
-        email: attendee
-      }))
+      attendees: /*only place where attendees should be called this*/ attendees.map(
+        attendee => ({
+          email: attendee
+        })
+      )
     };
     return event;
   }
