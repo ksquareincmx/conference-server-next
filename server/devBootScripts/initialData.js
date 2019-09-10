@@ -4,8 +4,8 @@ module.exports = async App => {
   const { user, Booking, Room } = App.models;
 
   const FirstUser = await user.create({
-    name: "Totally not Masiosare",
-    email: "anstrangeenemy@ksquareinc.com",
+    name: "Rafa RG",
+    email: "rafael.rodriguez@ksquareinc.com",
     password: "password",
     role: "admin"
   });
@@ -13,33 +13,33 @@ module.exports = async App => {
   const rooomsArr = await Room.create([
     {
       name: "DeWitt",
-      bg_color: "#FFFF",
-      txt_color: "#0000"
+      bg_color: "#333",
+      txt_color: "#e3e3e3"
     },
     {
       name: "Skywalker",
-      bg_color: "#FFFF",
-      txt_color: "#0000"
+      bg_color: "#333",
+      txt_color: "#e3e3e3"
     },
     {
       name: "Ganondorf",
-      bg_color: "#FFFF",
-      txt_color: "#0000"
+      bg_color: "#333",
+      txt_color: "#e3e3e3"
     },
     {
       name: "Stark",
-      bg_color: "#FFFF",
-      txt_color: "#0000"
+      bg_color: "#333",
+      txt_color: "#e3e3e3"
     },
     {
       name: "Dumbledore",
-      bg_color: "#FFFF",
-      txt_color: "#0000"
+      bg_color: "#333",
+      txt_color: "#e3e3e3"
     },
     {
       name: "Wayne",
-      bg_color: "#FFFF",
-      txt_color: "#0000"
+      bg_color: "#333",
+      txt_color: "#e3e3e3"
     }
   ]);
 
