@@ -43,31 +43,23 @@ function getAvailableBookingsByRoom(Room) {
         }
       });
 
+      console.log("this is the roomboking", JSON.stringify(roomBookings));
       // 1: Trim the array to get all the available hours
       // Catch1: Send me the available rooms
-
       const formatTime = time =>
         moment(time)
           .tz(timezone)
           .format()
           .slice(11, 16);
-
-      // const freshBookings = roomBookings.filter(
-      //   ({ start }) => moment(start).valueOf() < dateTimestamp
-      // );
-
-      const bkstr = roomBookings[0].start;
       const actual = getActualDate();
-      // console.log(bkstr, actual);
+      let existingBookings = [];
 
-      // const freshBookings = roomBookings.filter(booking => {
-
-      // });
-
-      const existingBookings = roomBookings.map(({ start, end }) => ({
-        start: formatTime(start),
-        end: formatTime(end)
-      }));
+      if (roomBookings.length !== 0) {
+        existingBookings = roomBookings.map(({ start, end }) => ({
+          start: formatTime(start),
+          end: formatTime(end)
+        }));
+      }
 
       // Add to occupiedHours edge Hours
 
