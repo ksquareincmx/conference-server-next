@@ -23,10 +23,10 @@
       "type": "boolean",
       "default": false
     },
-    "guests": {
+    "minimum_capacity": {
       "type": "number",
       "requied": true,
-      "default": 1
+      "default": 0
     }
   },
   "validations": [],

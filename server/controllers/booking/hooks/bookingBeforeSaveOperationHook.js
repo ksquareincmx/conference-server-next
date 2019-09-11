@@ -70,12 +70,17 @@ const bookingBeforeSaveOperationHook = (ctx, next) => {
     Booking.find(isAlreadyBooked(room_id, start, end), async (err, booking) => {
       let ownerUserId = token ? token.userId : instance.user_id;
       const { email: ownerEmail } = await user.findById(ownerUserId);
-      const { name: location, guests: minimumGuests } = await Room.findById(
-        room_id
-      );
+      const { name: location, minimum_capacity } = await Room.findById(room_id);
       let bookingErr = err;
       const [firstBooking] = booking;
-      if (guests < minimumGuests) {
+      // If the minGuests in the booking is set to 0, or a negative number, you won't be able
+      // to book the room.
+      if (minimum_capacity <= 0) {
+        return next(errorFactory.negativeGuests());
+      }
+      // If the guests in the booking is less than the minGuests in the room you won't be
+      // able to book the room.
+      if (guests < minimum_capacity) {
         return next(errorFactory.notEnoughGuests());
       }
 
