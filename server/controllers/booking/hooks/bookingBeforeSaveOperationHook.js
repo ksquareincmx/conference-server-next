@@ -80,7 +80,7 @@ const bookingBeforeSaveOperationHook = (ctx, next) => {
       }
       // If the guests in the booking is less than the minGuests in the room you won't be
       // able to book the room.
-      if (/*booking*/ guests < /*room*/ minimum_capacity) {
+      if (guests < minimum_capacity) {
         return next(errorFactory.notEnoughGuests());
       }
 
