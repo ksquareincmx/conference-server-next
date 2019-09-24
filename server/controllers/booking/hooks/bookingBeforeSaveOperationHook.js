@@ -75,7 +75,7 @@ const bookingBeforeSaveOperationHook = (ctx, next) => {
       const [firstBooking] = booking;
       // If the minGuests in the booking is set to 0, or a negative number, you won't be able
       // to book the room.
-      if (minimum_capacity <= 0) {
+      if (minimum_capacity < 0) {
         return next(errorFactory.negativeGuests());
       }
       // If the guests in the booking is less than the minGuests in the room you won't be
