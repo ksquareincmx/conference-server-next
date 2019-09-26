@@ -222,6 +222,16 @@ function slackInteraction(Booking) {
         const startAp = `${date}T${bookingInfo.startHour}:${bookingInfo.startMinute}:00`;
         const endAp = `${date}T${bookingInfo.endHour}:${bookingInfo.endMinute}:00`;
 
+        var currentDate = new Date();
+
+        if (moment(startAp).isBefore(currentDate)) {
+          return Promise.reject(new Error(`Please select a valid start hour.`));
+        }
+
+        if (moment(endAp).isBefore(currentDate)) {
+          return Promise.reject(new Error(`Please select a valid end hour.`));
+        }
+
         // compares if the bookings collide with the user current booking
         let booking = false;
         roomBookings.forEach(bkg => {
