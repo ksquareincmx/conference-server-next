@@ -13,27 +13,32 @@ module.exports = function(opts) {
    * it also can handle slack signed requests setting 'slackAccess' flag into the req
    */
   return async function(req, res, next) {
-    const token = getTokenFromReq(req);
+    try {
+      const token = getTokenFromReq(req);
 
-    if (
-      req.headers["x-slack-signature"] &&
-      req.headers["x-slack-request-timestamp"]
-    ) {
-      req.slackAccess = validateSignature(req);
-      return next();
-    } else if (token) {
-      const { id } = await verifyJwt(token);
+      if (
+        req.headers["x-slack-signature"] &&
+        req.headers["x-slack-request-timestamp"]
+      ) {
+        req.slackAccess = validateSignature(req);
+        return next();
+      } else if (token) {
+        const { id } = await verifyJwt(token);
 
-      const { user: User } = req.app.models;
-      let validUser = await User.findById(id);
+        const { user: User } = req.app.models;
+        let validUser = await User.findById(id);
 
-      if (!validUser) {
-        validUser = User.create({});
+        if (!validUser) {
+          validUser = User.create({});
+        }
+        req.currentUser = await User.findById(id);
+
+        next();
+      } else {
+        next();
       }
-      req.currentUser = await User.findById(id);
-
-      next();
-    } else {
+    } catch (e) {
+      console.error(e);
       next();
     }
   };
