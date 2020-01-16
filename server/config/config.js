@@ -5,7 +5,8 @@ module.exports = {
       name: env.APP_ADMIN_NAME,
       email: env.APP_ADMIN_EMAIL,
       password: env.APP_ADMIN_PASSWORD
-    }
+    },
+    environment: env.NODE_ENV || "development"
   },
   config: {
     email: {
