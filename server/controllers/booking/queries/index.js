@@ -1,5 +1,5 @@
-'use strict';
+"use strict";
 
 module.exports = {
-  isAlreadyBooked: require('./isAlreadyBooked')
+  isAlreadyBooked: require("./isAlreadyBooked")
 };

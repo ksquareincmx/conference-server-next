@@ -2,7 +2,7 @@ const moment = require("moment-timezone");
 const { getActualDate, isEmpty } = require("../../../utils");
 const isValidDate = date => date.toString() !== "Invalid date";
 
-function getAvailableBookingsByRoom(Room) {
+async function getAvailableBookingsByRoom(Room) {
   return async function(roomId, date) {
     const {
       officeConfig: { workingHours, timezone, minDuration }
@@ -22,7 +22,7 @@ function getAvailableBookingsByRoom(Room) {
       if (!date.isAMomentObject) {
         date = moment(date);
       }
-      // We get al the bookings in that array of hours
+      // We get all the bookings in that array of hours
       const isToday = () => moment().format("YYYY-MM-DD") === date;
       const dateTimestamp = moment(date).valueOf();
       const todayTimestamp = moment(date).valueOf();

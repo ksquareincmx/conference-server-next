@@ -17,8 +17,10 @@ const errorFactory = {
     status: 422,
     message: "Wrong start and end time"
   }),
-  badRequest: errorWith.bind(null, "Bad request", 400),
-  unauthorized: errorWith.bind(null, "Unauthorized", 401),
+  notEnoughGuests: () => ({
+    status: 422,
+    message: "Not enough guests to book this room!"
+  }),
   forbidden: errorWith.bind(null, "Forbidden", 403),
   serverError: errorWith.bind(null, "Internal server error", 500)
 };
