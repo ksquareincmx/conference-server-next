@@ -29,19 +29,14 @@ module.exports = App => {
                     room_id: kijimiRoom.id,
                     user_id: babu.id
                 }, (err, newBooking) => {
-                    console.log(err)
-                    console.log(newBooking)
+                  if (err) {
+                    throw new Error('Cannot create booking', err);
+                  }
                 }
             )
 
             }
-
-
-
         )
-
-        // console.log('Admin token: ', `"${await make(Room)}"`);
-
       }
     );
   };
