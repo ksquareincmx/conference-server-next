@@ -10,6 +10,9 @@ const path = require("path");
 const {
   config: {
     auth: { slack }
+  },
+  app: {
+    environment
   }
 } = require("./config/config");
 const app = (module.exports = loopback());
@@ -32,15 +35,21 @@ app.start = function() {
 
 // Bootstrap the application, configure models, datasources and middleware.
 // Sub-apps like REST API are mounted via boot scripts.
+
+const bootDirs = [
+  path.resolve(__dirname, "bootScripts"),
+]
+
+if (environment === "development") {
+  bootDirs.push(path.resolve(__dirname, "devBootScripts"))
+}
+
 boot(
   app,
   {
     appRootDir: __dirname,
-    bootDirs: [
-      path.resolve(__dirname, "bootScripts"),
-      path.resolve(__dirname, "devBootScripts")
-    ]
-  },
+      bootDirs
+    },
   function(err) {
     if (err) throw err;
 

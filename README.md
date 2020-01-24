@@ -14,7 +14,7 @@ the `office-config.js` is where your company custom requirements lives, some of 
 
 **Where do I get that config information**
 
-If for some reason you want to access the `officeConfig` (the object where all this data is stored) it belongs to the `app` object, since this app is build with `loopback` it has some cool `express` features aswell, which let's us access the `app` object so whenever you want
+If for some reason you want to access the `officeConfig` (the object where all this data is stored) it belongs to the `app` object, since this app is build with `loopback` it has some cool `express` features as well, which lets us access the `app` object whenever you want.
 
 ## About the Google Auth Endpoint
 
@@ -32,7 +32,7 @@ TODO
 
 TODO
 
-### About de `user` model
+### About the `user` model
 
 Loopback has a default `User` model which is not recommended to work with,
 so we created an `user` model which will be the official model we use for
@@ -58,3 +58,28 @@ AccessToken.create({
   .then(accesstoken => {})
   .catch(err => {});
 ```
+### Setting up your .env variables
+
+In order to run the project, you'll have to set up your own environment variables by creating an `.env` file on your root folder. PLease refer to the `.env.example` file to see all the variables you'll need to fill. Please note that some Slack `.env` credentials have the same name but require different values depending on whether they'll be used on production or development.
+
+| Variable                         | Description                                            |
+| -------------------------------- | ------------------------------------------------------ |
+| `JWT_SECRET`                     | Your JWT (JSON Web Token) Secret                       |
+| `GOOGLE_CLIENT_ID`               | Your Google Client ID                                  |
+| `APP_ADMIN_NAME`                 | The name of the app's admin                            |
+| `APP_ADMIN_EMAIL`                | The email of the app's admin                           |
+| `APP_ADMIN_PASSWORD`             | The password of the app's admin                        |
+| `DB_NAME`                        | The name of your database                              |
+| `DB_USER`                        | Your database username                                 |
+| `DB_PASSWORD`                    | Your database password                                 |
+| `KEY_SERVICE_ACCOUNT`            | Your Google's Service Account private key              |
+| `SERVICE_ACCOUNT`                | Your Google's Service Account email                    |
+| `EMAIL_FROM_ADDRESS`             | The account which will send a booking's confirmation   |
+| `REACT_APP_GOOGLE_CLIENT_ID`     | The client's react app Google Client ID                |
+| `REACT_APP_SERVER_URI`           | The client's react app server URI                      |
+| `SLACK_ACCESS_TOKEN`             | Your Slack App's Access Token                          |
+| `SLACK_SIGNING_SECRET`           | Your Slack App's signing secret                        |
+| `SLACK_CLIENT_ID`                | Your Slack App's client ID                             |
+| `SLACK_CLIENT_SECRET`            | Your Slack App's client secret                         |
+| `SLACK_OAUTH_REDIRECT_URI`       | Your Slack App's OAuth Redirect URI                    |
+| `SLACK_CALLBACK_URL`             | Your Slack App's Callback URI                          |
