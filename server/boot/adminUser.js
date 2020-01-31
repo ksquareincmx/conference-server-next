@@ -10,6 +10,7 @@ module.exports = App => {
     {
       name: app.admin.name,
       email: app.admin.email,
+      password: "whatever", // because it uses User as the base instead of PersistedModel
       role: "admin"
     }, async (err, user) => {
       if (err) {

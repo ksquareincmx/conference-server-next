@@ -47,7 +47,7 @@ module.exports = async App => {
     description: "1st booking",
     end: moment().add("30", "minutes"),
     start: moment().add("10", "minutes"),
-    user_id: FirstUser.id,
+    userId: FirstUser.id,
     room_id: rooomsArr[0].id
   });
 };

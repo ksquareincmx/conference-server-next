@@ -40,7 +40,7 @@
     "user": {
       "type": "belongsTo",
       "model": "user",
-      "foreignKey": "user_id"
+      "foreignKey": "userId"
     },
     "room": {
       "type": "belongsTo",
@@ -79,20 +79,6 @@
       "principalType": "ROLE",
       "principalId": "$authenticated",
       "permission": "ALLOW"
-    },
-    {
-      "accessType": "EXECUTE",
-      "principalType": "ROLE",
-      "principalId": "slack",
-      "property": "slackCommand",
-      "permission": "ALLOW"
-    },
-    {
-      "accessType": "EXECUTE",
-      "principalType": "ROLE",
-      "principalId": "$everyone",
-      "property": "slackCommand",
-      "permission": "DENY"
     }
   ],
   "methods": {}
