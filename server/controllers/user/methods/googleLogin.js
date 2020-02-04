@@ -51,7 +51,8 @@ function googleLogin(User) {
         email,
         name,
         picture,
-        googleId: userId
+        googleId: userId,
+        password: 'anitalavalatina'
       }
     );
 
