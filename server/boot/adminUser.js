@@ -3,6 +3,7 @@
  */
 const { app } = require("../config/config");
 const { make } = require('../services/jwtService');
+const crypto = require('crypto');
 
 module.exports = App => {
   const { user } = App.models;
@@ -10,7 +11,7 @@ module.exports = App => {
     {
       name: app.admin.name,
       email: app.admin.email,
-      password: "whatever", // because it uses User as the base instead of PersistedModel
+      password: crypto.randomBytes(20).toString('hex'),
       role: "admin"
     }, async (err, user) => {
       if (err) {
@@ -18,7 +19,7 @@ module.exports = App => {
       }
 
       console.log('Admin token: ', `"${await make(user)}"`);
-
+      
     }
   );
 };

@@ -13,6 +13,7 @@ const {
 const gAuthClient = new OAuth2Client(auth.google.clientId);
 const { make } = require("../../../services/jwtService");
 const { filterByEmail } = require("../queries");
+const crypto = require('crypto')
 
 function googleLogin(User) {
   return async function(idToken, next) {
@@ -52,7 +53,7 @@ function googleLogin(User) {
         name,
         picture,
         googleId: userId,
-        password: 'anitalavalatina'
+        password: crypto.randomBytes(20).toString('hex')
       }
     );
 
