@@ -13,3 +13,5 @@ module.exports = {
     return day === 6 || day === 7;
   }
 };
+
+// TODO: soon to be erased.
