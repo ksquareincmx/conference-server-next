@@ -1,3 +1,5 @@
+const moment = require("moment-timezone");
+
 function isWeekendDay(date) {
     const formattedDate = moment(`${date}T05:00`).tz("America/Mexico_city");
     const day = formattedDate.isoWeekday();
