@@ -13,6 +13,7 @@ const {
 const gAuthClient = new OAuth2Client(auth.google.clientId);
 const { make } = require("../../../services/jwtService");
 const { filterByEmail } = require("../queries");
+const { generateRandomValueBase64 } = require('../../../utils');
 
 function googleLogin(User) {
   return async function(idToken, next) {
@@ -51,7 +52,8 @@ function googleLogin(User) {
         email,
         name,
         picture,
-        googleId: userId
+        googleId: userId,
+        password: generateRandomValueBase64(20)
       }
     );
 

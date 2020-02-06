@@ -1,6 +1,6 @@
 {
   "name": "user",
-  "base": "PersistedModel",
+  "base": "User",
   "idInjection": true,
   "options": {
     "validateUpsert": true
@@ -35,7 +35,7 @@
     "bookings": {
       "type": "hasMany",
       "model": "Booking",
-      "foreignKey": "user_id"
+      "foreignKey": "userId"
     }
   },
   "acls": [

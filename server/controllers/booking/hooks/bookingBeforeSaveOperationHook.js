@@ -68,7 +68,7 @@ const bookingBeforeSaveOperationHook = (ctx, next) => {
     }
 
     Booking.find(isAlreadyBooked(room_id, start, end), async (err, booking) => {
-      let ownerUserId = token ? token.userId : instance.user_id;
+      let ownerUserId = token ? token.userId : instance.userId;
       const { email: ownerEmail } = await user.findById(ownerUserId);
       const { name: location, minimum_capacity } = await Room.findById(room_id);
       let bookingErr = err;

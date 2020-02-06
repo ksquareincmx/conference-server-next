@@ -3,6 +3,7 @@
  */
 const { app } = require("../config/config");
 const { make } = require('../services/jwtService');
+const { generateRandomValueBase64 } = require('../utils')
 
 module.exports = App => {
   const { user } = App.models;
@@ -10,6 +11,7 @@ module.exports = App => {
     {
       name: app.admin.name,
       email: app.admin.email,
+      password: generateRandomValueBase64(20),
       role: "admin"
     }, async (err, user) => {
       if (err) {
@@ -17,7 +19,7 @@ module.exports = App => {
       }
 
       console.log('Admin token: ', `"${await make(user)}"`);
-
+            
     }
   );
 };
