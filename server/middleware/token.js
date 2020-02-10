@@ -29,7 +29,7 @@ module.exports = function(opts) {
         let validUser = await User.findById(id);
 
         if (!validUser) {
-          validUser = await User.create({});
+          validUser = User.create({});
         }
         req.currentUser = await User.findById(id);
 
