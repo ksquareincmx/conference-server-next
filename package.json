@@ -11,7 +11,8 @@
     "production": "cross-env NODE_ENV=production node .",
     "posttest": "yarn lint && yarn audit",
     "format": "prettier --write 'server/**/*.js'",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "automigrate": "node bin/automigrate.js"
   },
   "dependencies": {
     "body-parser": "^1.19.0",

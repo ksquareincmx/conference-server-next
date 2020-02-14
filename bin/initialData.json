@@ -1,0 +1,42 @@
+{
+    "user": [
+        {
+            "name": "Test Admin",
+            "email": "conferencedummyuser@ksquareinc.com",
+            "password": "KsquareConference2019",
+            "role": "admin"
+        }
+    ],
+    "Room": [
+        {
+            "name": "DeWitt",
+            "bg_color": "#333",
+            "txt_color": "#e3e3e3"
+        },
+        {
+            "name": "Skywalker",
+            "bg_color": "#333",
+            "txt_color": "#e3e3e3"
+        },
+        {
+            "name": "Ganondorf",
+            "bg_color": "#333",
+            "txt_color": "#e3e3e3"
+        },
+        {
+            "name": "Stark",
+            "bg_color": "#333",
+            "txt_color": "#e3e3e3"
+        },
+        {
+            "name": "Dumbledore",
+            "bg_color": "#333",
+            "txt_color": "#e3e3e3"
+        },
+        {
+            "name": "Wayne",
+            "bg_color": "#333",
+            "txt_color": "#e3e3e3"
+        }
+    ]
+}
