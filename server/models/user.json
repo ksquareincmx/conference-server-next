@@ -5,6 +5,10 @@
   "options": {
     "validateUpsert": true
   },
+  "hidden": [
+    "slackAccessToken",
+    "googleIdToken"
+  ],
   "properties": {
     "picture": {
       "type": "string",
@@ -29,7 +33,6 @@
       "type": "string"
     }
   },
-  "hidden": ["slackAccessToken", "googleIdToken"],
   "validations": [],
   "relations": {
     "bookings": {
@@ -55,8 +58,8 @@
       "accessType": "EXECUTE",
       "principalType": "ROLE",
       "principalId": "$everyone",
-      "property": "slackLogin",
-      "permission": "ALLOW"
+      "permission": "ALLOW",
+      "property": "slackLogin"
     },
     {
       "accessType": "READ",
@@ -68,8 +71,8 @@
       "accessType": "EXECUTE",
       "principalType": "ROLE",
       "principalId": "$everyone",
-      "property": "googleLogin",
-      "permission": "ALLOW"
+      "permission": "ALLOW",
+      "property": "googleLogin"
     }
   ],
   "methods": {}

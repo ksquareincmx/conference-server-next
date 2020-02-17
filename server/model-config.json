@@ -14,11 +14,11 @@
     ]
   },
   "User": {
-    "dataSource": "db",
+    "dataSource": "mySQL",
     "public": false
   },
   "AccessToken": {
-    "dataSource": "db",
+    "dataSource": "mySQL",
     "public": false,
     "relations": {
       "user": {
@@ -29,34 +29,34 @@
     }
   },
   "ACL": {
-    "dataSource": "db",
+    "dataSource": "mySQL",
     "public": false
   },
   "RoleMapping": {
-    "dataSource": "db",
+    "dataSource": "mySQL",
     "public": false,
     "options": {
       "strictObjectIDCoercion": true
     }
   },
   "Role": {
-    "dataSource": "db",
+    "dataSource": "mySQL",
     "public": false
   },
   "Booking": {
-    "dataSource": "db",
+    "dataSource": "mySQL",
     "public": true
   },
   "Room": {
-    "dataSource": "db",
+    "dataSource": "mySQL",
     "public": true
   },
   "AuthProvider": {
-    "dataSource": "db",
+    "dataSource": "mySQL",
     "public": false
   },
   "user": {
-    "dataSource": "db",
+    "dataSource": "mySQL",
     "public": true
   }
 }

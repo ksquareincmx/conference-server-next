@@ -22,7 +22,9 @@
       "type": "string"
     },
     "attendees": {
-      "type": ["string"],
+      "type": [
+        "string"
+      ],
       "required": false,
       "default": []
     },
