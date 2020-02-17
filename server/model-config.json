@@ -14,11 +14,11 @@
     ]
   },
   "User": {
-    "dataSource": "conferenceBooking",
+    "dataSource": "mySQL",
     "public": false
   },
   "AccessToken": {
-    "dataSource": "conferenceBooking",
+    "dataSource": "mySQL",
     "public": false,
     "relations": {
       "user": {
@@ -29,34 +29,34 @@
     }
   },
   "ACL": {
-    "dataSource": "conferenceBooking",
+    "dataSource": "mySQL",
     "public": false
   },
   "RoleMapping": {
-    "dataSource": "conferenceBooking",
+    "dataSource": "mySQL",
     "public": false,
     "options": {
       "strictObjectIDCoercion": true
     }
   },
   "Role": {
-    "dataSource": "conferenceBooking",
+    "dataSource": "mySQL",
     "public": false
   },
   "Booking": {
-    "dataSource": "conferenceBooking",
+    "dataSource": "mySQL",
     "public": true
   },
   "Room": {
-    "dataSource": "conferenceBooking",
+    "dataSource": "mySQL",
     "public": true
   },
   "AuthProvider": {
-    "dataSource": "conferenceBooking",
+    "dataSource": "mySQL",
     "public": false
   },
   "user": {
-    "dataSource": "conferenceBooking",
+    "dataSource": "mySQL",
     "public": true
   }
 }

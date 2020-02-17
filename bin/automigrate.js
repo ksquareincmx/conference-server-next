@@ -7,7 +7,7 @@ const {
   Room: initialRooms
 } = require("./initialData.json");
 
-const datasource = app.datasources.conferenceBooking;
+const datasource = app.datasources.mySQL;
 
 const excludeModels = ["_meta", "User"];
 
